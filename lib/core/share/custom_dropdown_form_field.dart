@@ -30,7 +30,7 @@ class CustomDropdownFormField extends StatelessWidget {
         return DraggableScrollableSheet(
           initialChildSize: 0.6,
           minChildSize: 0.3,
-          maxChildSize: 0.7,
+          maxChildSize: 0.6,
           expand: false,
           builder: (context, scrollController) {
             return SafeArea(
