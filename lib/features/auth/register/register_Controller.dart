@@ -29,8 +29,11 @@ class RegisterController extends ChangeNotifier {
 
   final List<String> cities = ['Cairo', 'Giza', 'Alexandria', 'Qalyubia'];
   final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
-  final List<String> paymentTypes = ['Cash on Delivery', 'Online Payment', 'Bank Transfer',];
-
+  final List<String> paymentTypes = [
+    'Cash on Delivery',
+    'Online Payment',
+    'Bank Transfer',
+  ];
 
   void selectCity(String? value) {
     selectedCity = value;
@@ -48,14 +51,15 @@ class RegisterController extends ChangeNotifier {
   }
 
   void togglePassword() {
-      obscurePassword = !obscurePassword;
-      notifyListeners();
+    obscurePassword = !obscurePassword;
+    notifyListeners();
   }
-Future<void> register() async {
-  if (key.currentState!.validate()) {
-    print("don");
+
+  Future<void> register() async {
+    if (key.currentState!.validate()) {
+      print("don");
+    }
   }
-}
 
   @override
   void dispose() {
@@ -68,5 +72,4 @@ Future<void> register() async {
     passwordController.dispose();
     super.dispose();
   }
-
 }
