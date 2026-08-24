@@ -177,25 +177,18 @@ class RegisterScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-
                                 const SizedBox(width: 6),
-
                                 Expanded(
-                                  child: TextFormField(
+                                  child: CustomTextFormField(
+                                    title: 'Phone',
                                     controller: controller.phoneController,
                                     keyboardType: TextInputType.phone,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Phone *',
-                                      prefixIcon: Icon(Icons.phone_android),
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter phone number';
-                                      }
-                                      return null;
-                                    },
+                                    textInputAction: TextInputAction.next,
+                                    prefixIcon: Icons.phone_android,
+                                    validator: Validators.email,
                                   ),
+
+
                                 ),
                               ],
                             ),
