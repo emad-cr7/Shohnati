@@ -1,9 +1,5 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-
-import '../../../core/graphL/graph_config.dart';
-import '../../../core/queries/zone_queries.dart';
 
 class RegisterController extends ChangeNotifier {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
@@ -31,57 +27,35 @@ class RegisterController extends ChangeNotifier {
     e164Key: '',
   );
 
-  // بيتملى من الـ API بدل ما يكون هاردكودد
-  List<Map<String, dynamic>> zones = [];
-
-  bool isLoadingZones = false;
-
+  final List<String> cities = ['Cairo', 'Giza', 'Alexandria', 'Qalyubia'];
   final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
   final List<String> paymentTypes = ['Cash on Delivery', 'Online Payment', 'Bank Transfer',];
 
-  RegisterController() {
-    fetchZones();
-  }
 
-  List<String> get zoneNames => zones.map((z) => z['name'] as String).toList();
-
-  Future<void> fetchZones() async {
-    isLoadingZones = true;
-    notifyListeners();
-
-    final client = GraphConfig.client();
-    final result = await client.query(
-      QueryOptions(document: gql(ZoneQueries.listMainZonesQuery)),
-    );
-
-    if (!result.hasException) {
-      final data = result.data?['listZonesDropdown'] as List<dynamic>? ?? [];
-      zones = data
-          .map((e) => {'id': e['id'], 'name': e['name']})
-          .toList();
-    } else {
-      print(result.exception.toString());
-    }
-
-    isLoadingZones = false;
+  void selectCity(String? value) {
+    selectedCity = value;
     notifyListeners();
   }
 
-  int? get selectedZoneId {
-    final match = zones.where((z) => z['name'] == selectedCity);
-    return match.isEmpty ? null : match.first['id'] as int?;
+  void selectRegion(String? value) {
+    selectedRegion = value;
+    notifyListeners();
+  }
+
+  void selectPayment(String? value) {
+    selectedPayment = value;
+    notifyListeners();
   }
 
   void togglePassword() {
-    obscurePassword = !obscurePassword;
-    notifyListeners();
+      obscurePassword = !obscurePassword;
+      notifyListeners();
   }
-
-  Future<void> register() async {
-    if (key.currentState!.validate()) {
-      print("don");
-    }
+Future<void> register() async {
+  if (key.currentState!.validate()) {
+    print("don");
   }
+}
 
   @override
   void dispose() {
@@ -94,4 +68,5 @@ class RegisterController extends ChangeNotifier {
     passwordController.dispose();
     super.dispose();
   }
+
 }
