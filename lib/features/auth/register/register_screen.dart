@@ -201,15 +201,13 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
 
-                            // City
+                            // Zone
                             CustomDropdownFormField(
                               value: controller.selectedCity,
                               hintText: 'zone',
                               prefixIcon: Icons.location_city,
-                              items: controller.zoneNames,
-                              onChanged: (value) {
-                                controller.selectedCity = value;
-                              },
+                              items: controller.cities,
+                              onChanged: controller.selectCity,
                             ),
 
                             const SizedBox(height: 8),
@@ -220,9 +218,7 @@ class RegisterScreen extends StatelessWidget {
                               hintText: 'Region',
                               prefixIcon: Icons.location_on_outlined,
                               items: controller.regions,
-                              onChanged: (value) {
-                                controller.selectedRegion = value;
-                              },
+                              onChanged: controller.selectRegion,
                             ),
 
                             const SizedBox(height: 8),
@@ -233,9 +229,7 @@ class RegisterScreen extends StatelessWidget {
                               hintText: 'Payment Type',
                               prefixIcon: Icons.payment,
                               items: controller.paymentTypes,
-                              onChanged: (value) {
-                                controller.selectedPayment = value;
-                              },
+                              onChanged: controller.selectPayment,
                             ),
                             const SizedBox(height: 8),
                             // Address
