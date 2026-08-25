@@ -14,33 +14,23 @@ class RegisterController extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   bool obscurePassword = true;
+
   ZoneModel? selectedCity;
-  String? selectedRegion;
+  ZoneModel? selectedRegion;
+
   String? selectedPayment;
   bool isZonesLoading = false;
+  bool isRegionsLoading = false;
+
 
   init() {
     fetchZones();
   }
 
-  Country selectedCountry = Country(
-    phoneCode: '20',
-    countryCode: 'EG',
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: 'Egypt',
-    example: '1001234567',
-    displayName: 'Egypt',
-    displayNameNoCountryCode: 'Egypt',
-    e164Key: '',
-  );
   final ZoneService zoneService = ZoneService();
   List<ZoneModel> zones = [];
-
-  List<String> get zoneNames => zones.map((zone) => zone.name).toList();
-
   Future<void> fetchZones() async {
     isZonesLoading = true;
     notifyListeners();
@@ -53,23 +43,61 @@ class RegisterController extends ChangeNotifier {
       notifyListeners();
     }
   }
-
   void selectCity(ZoneModel? value) {
     selectedCity = value;
+    selectedRegion = null;
+    regions = [];
+    notifyListeners();
+
+    if (value != null) {
+      fetchRegions();
+    }
+  }
+
+
+  List<ZoneModel> regions = [];
+  Future<void> fetchRegions() async {
+    isRegionsLoading = true;
+    notifyListeners();
+    try {
+      regions = await zoneService.getRegions(int.parse(selectedCity!.id));
+    } catch (e) {
+      log('Error fetching regions: $e');
+    } finally {
+      isRegionsLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void selectRegion(ZoneModel? value) {
+    selectedRegion = value;
     notifyListeners();
   }
 
-  final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
+  Country selectedCountry = Country(
+  phoneCode: '20',
+  countryCode: 'EG',
+  e164Sc: 0,
+  geographic: true,
+  level: 1,
+  name: 'Egypt',
+  example: '1001234567',
+  displayName: 'Egypt',
+  displayNameNoCountryCode: 'Egypt',
+  e164Key: '',
+  );
+
+  void updateSelectedCountry(Country country) {
+  selectedCountry = country;
+  notifyListeners();
+  }
+
   final List<String> paymentTypes = [
     'Cash on Delivery',
     'Online Payment',
     'Bank Transfer',
   ];
 
-  void selectRegion(String? value) {
-    selectedRegion = value;
-    notifyListeners();
-  }
 
   void selectPayment(String? value) {
     selectedPayment = value;

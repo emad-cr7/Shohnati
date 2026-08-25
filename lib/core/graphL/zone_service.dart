@@ -7,8 +7,9 @@ import '../queries/region_queries.dart';
 import '../queries/zone_queries.dart';
 import 'graph_config.dart';
 
-class RegisterService {
+class ZoneService {
   final GraphQLClient client = GraphConfig.client();
+
   Future<List<ZoneModel>> getZones() async {
     final result = await client.query(
       QueryOptions(
@@ -25,8 +26,7 @@ class RegisterService {
       print("loading");
     }
 
-    final data = result.data?['listZonesDropdown']; // خد بالك ده كان لازم يتصلح كمان زي ما قلنا فوق
-
+    final data = result.data?['listZonesDropdown'];
     if (data == null) {
       return [];
     }
