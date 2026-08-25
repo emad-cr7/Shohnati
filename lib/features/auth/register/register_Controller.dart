@@ -7,13 +7,13 @@ class RegisterController extends ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController postalCodeController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
   String? selectedCity;
   String? selectedRegion;
   String? selectedPayment;
+
   Country selectedCountry = Country(
     phoneCode: '20',
     countryCode: 'EG',
@@ -29,9 +29,7 @@ class RegisterController extends ChangeNotifier {
 
   final List<String> cities = ['Cairo', 'Giza', 'Alexandria', 'Qalyubia'];
   final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
-  final List<String> paymentTypes = [
-    'Cash on Delivery',
-    'Online Payment',
+  final List<String> paymentTypes = ['Cash on Delivery', 'Online Payment',
     'Bank Transfer',
   ];
 
@@ -57,7 +55,7 @@ class RegisterController extends ChangeNotifier {
 
   Future<void> register() async {
     if (key.currentState!.validate()) {
-      print("don");
+
     }
   }
 
@@ -67,7 +65,6 @@ class RegisterController extends ChangeNotifier {
     nameController.dispose();
     emailController.dispose();
     phoneController.dispose();
-    postalCodeController.dispose();
     addressController.dispose();
     passwordController.dispose();
     super.dispose();

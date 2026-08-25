@@ -35,13 +35,13 @@ class Validators {
   }
 
   // Mobile
-  static String? mobile(String? value) {
+  static String? phone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please enter your mobile number';
+      return 'Please enter your Phone number';
     }
 
     if (!RegExp(r'^(01)[0-9]{9}$').hasMatch(value.trim())) {
-      return 'Please enter a valid mobile number';
+      return 'Please enter a valid Phone number';
     }
 
     return null;

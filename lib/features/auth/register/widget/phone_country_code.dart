@@ -62,7 +62,7 @@ class PhoneCountryCode extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icons.phone_android,
-                validator: Validators.email,
+                validator: Validators.phone,
               ),
             ),
           ],

@@ -78,7 +78,7 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
 
-    // Label وهو داخل الـ TextFormField
+    // TextFormField
     labelStyle: const TextStyle(
       color: Color(0xff757684),
       fontSize: 16,
