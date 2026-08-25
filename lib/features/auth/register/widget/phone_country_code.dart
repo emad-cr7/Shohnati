@@ -29,7 +29,7 @@ class PhoneCountryCode extends StatelessWidget {
                     padding: EdgeInsets.zero,
                   ),
                   onSelect: (country) {
-                    controller.selectedCountry = country;
+                    controller.updateSelectedCountry(country);
                   },
                 );
               },
