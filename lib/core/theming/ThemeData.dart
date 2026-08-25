@@ -95,5 +95,41 @@ final ThemeData lightTheme = ThemeData(
       color: Color(0xff999999),
     ),
   ),
+  textTheme: TextTheme(
+    displaySmall: TextStyle(
+      fontSize: 40 ,
+      color: Color(0xff00288E),
+      fontWeight: FontWeight.bold,
+    ),
+    displayMedium: TextStyle(
+      color: Color(0xff3e3e42),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    ),
+    displayLarge: TextStyle(
+      color: Color(0xff3e3e42),
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
+    titleSmall: TextStyle(
+      color: Color(0xff3e3e42),
+      fontSize: 14,
+    ),
+    // titleMedium: TextStyle(
+    //   color: Color(0xff161F1B),
+    //   fontSize:  16,
+    //   fontWeight: FontWeight.w400,
+    // ),
+    // titleLarge: TextStyle(
+    //   color: Color(0xff6A6A6A),
+    //   fontSize:  16,
+    //   fontWeight: FontWeight.w400,
+    //   decoration: TextDecoration.lineThrough,
+    //   decorationColor: Color(0xff6A6A6A),
+    //   overflow: TextOverflow.ellipsis,
+    // ),
+    // labelSmall: TextStyle(color: Color(0XFF161F1B), fontSize:  16),
+    // labelMedium: TextStyle(color: Color(0XFF161F1B), fontSize:  24),
+  ),
 
 );

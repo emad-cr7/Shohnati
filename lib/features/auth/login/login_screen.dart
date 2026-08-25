@@ -18,7 +18,11 @@ class LoginScreen extends StatelessWidget {
           create: (BuildContext context) => LoginController(),
           child: Consumer<LoginController>(
             builder:
-                (BuildContext context, LoginController controller, Widget? child,) {
+                (
+                  BuildContext context,
+                  LoginController controller,
+                  Widget? child,
+                ) {
                   return Center(
                     child: Form(
                       key: controller.Key,
@@ -27,19 +31,11 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Text(
                             "Sh7naty",
-                            style: TextStyle(
-                              color: Color(0xff00288E),
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.displaySmall,
                           ),
                           Text(
                             "Easier shipping... faster delivery.",
-                            style: TextStyle(
-                              color: Color(0xff3e3e42),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                           SizedBox(height: 25),
                           SizedBox(
@@ -49,19 +45,16 @@ class LoginScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   "Welcome back.",
-                                  style: TextStyle(
-                                    color: Color(0xff3e3e42),
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.displayLarge,
                                 ),
                                 SizedBox(height: 4),
                                 Text(
                                   "Log in to easily track your shipments.",
-                                  style: TextStyle(
-                                    color: Color(0xff3e3e42),
-                                    fontSize: 16,
-                                  ),
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.displayMedium,
                                 ),
                                 SizedBox(height: 30),
                                 CustomTextFormField(
@@ -127,10 +120,9 @@ class LoginScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Don't have an account?",
-                                      style: TextStyle(
-                                        color: Color(0xff3e3e42),
-                                        fontSize: 14,
-                                      ),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.titleSmall,
                                     ),
                                     SizedBox(width: 5),
                                     TextButton(
@@ -152,11 +144,10 @@ class LoginScreen extends StatelessWidget {
                                       },
                                       child: Text(
                                         "Create an account",
-                                        style: TextStyle(
-                                          color: Color(0xff00288E),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(color: Color(0xff00288E)),
                                       ),
                                     ),
                                   ],
