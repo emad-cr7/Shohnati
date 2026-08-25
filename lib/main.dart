@@ -5,7 +5,7 @@ import 'features/auth/login/login_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async{
 
   runApp(const MyApp());
 }

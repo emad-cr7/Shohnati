@@ -15,7 +15,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RegisterController>(
-      create: (BuildContext context) => RegisterController(),
+      create: (BuildContext context) => RegisterController()..init(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

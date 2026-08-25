@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/graphL/zone_service.dart';
+import '../../../core/model/zone_model.dart';
 
 class RegisterController extends ChangeNotifier {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
@@ -10,9 +15,14 @@ class RegisterController extends ChangeNotifier {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
-  String? selectedCity;
+  ZoneModel? selectedCity;
   String? selectedRegion;
   String? selectedPayment;
+  bool isZonesLoading = false;
+
+  init() {
+    fetchZones();
+  }
 
   Country selectedCountry = Country(
     phoneCode: '20',
@@ -26,17 +36,35 @@ class RegisterController extends ChangeNotifier {
     displayNameNoCountryCode: 'Egypt',
     e164Key: '',
   );
+  final ZoneService zoneService = ZoneService();
+  List<ZoneModel> zones = [];
 
-  final List<String> cities = ['Cairo', 'Giza', 'Alexandria', 'Qalyubia'];
-  final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
-  final List<String> paymentTypes = ['Cash on Delivery', 'Online Payment',
-    'Bank Transfer',
-  ];
+  List<String> get zoneNames => zones.map((zone) => zone.name).toList();
 
-  void selectCity(String? value) {
+  Future<void> fetchZones() async {
+    isZonesLoading = true;
+    notifyListeners();
+    try {
+      zones = await zoneService.getZones();
+    } catch (e) {
+      log('Error fetching zones: $e');
+    } finally {
+      isZonesLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void selectCity(ZoneModel? value) {
     selectedCity = value;
     notifyListeners();
   }
+
+  final List<String> regions = ['Nasr City', 'Maadi', 'New Cairo', 'Dokki'];
+  final List<String> paymentTypes = [
+    'Cash on Delivery',
+    'Online Payment',
+    'Bank Transfer',
+  ];
 
   void selectRegion(String? value) {
     selectedRegion = value;
@@ -54,9 +82,7 @@ class RegisterController extends ChangeNotifier {
   }
 
   Future<void> register() async {
-    if (key.currentState!.validate()) {
-
-    }
+    if (key.currentState!.validate()) {}
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sh7naty/features/auth/register/register_Controller.dart';
 
 import '../../../../core/share/custom_dropdown_form_field.dart';
+import '../../../../core/share/custom_text_form_field_zone.dart';
 
 class DropdownField extends StatelessWidget {
   const DropdownField({super.key, required this.controller});
@@ -13,11 +14,11 @@ class DropdownField extends StatelessWidget {
     return Column(
       children: [
         // Zone
-        CustomDropdownFormField(
+        ZoneDropdownFormField(
           value: controller.selectedCity,
           hintText: 'zone',
           prefixIcon: Icons.location_city,
-          items: controller.cities,
+          items: controller.zones,
           onChanged: controller.selectCity,
         ),
 
