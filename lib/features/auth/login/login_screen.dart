@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sh7naty/features/auth/login/login_controller.dart';
 import 'package:sh7naty/features/auth/register/register_screen.dart';
-
-import '../../../core/share/custom_text_formField.dart';
-import '../../../core/share/validators/validators.dart';
+import '../../../core/shared/custom_text_formField.dart';
+import '../../../core/shared/validators/validators.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

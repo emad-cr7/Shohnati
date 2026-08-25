@@ -23,27 +23,27 @@ class AuthQueries {
     $businessName: String!
     $name: String
     $email: String!
-    $password: String!
     $mobile: String!
     $zoneId: Int!
     $subzoneId: Int!
     $address: String!
-    $postalCode: String
+    $postalCode: String!
     $paymentMethodCode: PaymentMethodCode!
-    $customerTypeCode: CustomerTypeCode!
+    $customerTypeCode: CustomerTypeCode! 
+    $password: String!
   ) {
     register(input: {
       businessName: $businessName
       name: $name
       email: $email
-      password: $password
       mobile: $mobile
       zoneId: $zoneId
       subzoneId: $subzoneId
       address: $address
       postalCode: $postalCode
       paymentMethodCode: $paymentMethodCode
-      customerTypeCode: $customerTypeCode
+      customerTypeCode: $customerTypeCode 
+      password: $password
     })
   }
 ''';

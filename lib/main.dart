@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'core/graphL/zone_service.dart';
 import 'core/theming/ThemeData.dart';
 import 'features/auth/login/login_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async{
-    runApp(const MyApp());
+void main() async {
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -60,7 +60,6 @@ class Validators {
     return null;
   }
 
-
   // Address
   static String? address(String? value) {
     if (value == null || value.trim().isEmpty) {

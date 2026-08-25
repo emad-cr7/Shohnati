@@ -1,13 +1,15 @@
 import 'dart:developer';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:sh7naty/features/auth/data/queries/region_queries.dart';
+import 'package:sh7naty/features/auth/data/queries/zone_queries.dart';
 
-import '../model/zone_model.dart';
-import '../queries/region_queries.dart';
-import '../queries/zone_queries.dart';
-import 'graph_config.dart';
+import '../../../../core/graphql/graph_config.dart';
+import '../models/zone_model.dart';
 
-class ZoneService {
+
+
+class RegisterService {
   final GraphQLClient client = GraphConfig.client();
 
   Future<List<ZoneModel>> getZones() async {
@@ -20,10 +22,6 @@ class ZoneService {
     if (result.hasException) {
       log('GraphQL Error: ${result.exception.toString()}');
       throw Exception(result.exception.toString());
-    }
-
-    if (result.isLoading) {
-      print("loading");
     }
 
     final data = result.data?['listZonesDropdown'];
@@ -47,7 +45,6 @@ class ZoneService {
     }
 
     final data = result.data?['listZonesDropdown'];
-
     if (data == null) {
       return [];
     }
