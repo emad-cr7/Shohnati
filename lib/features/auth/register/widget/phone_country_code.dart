@@ -24,7 +24,8 @@ class PhoneCountryCode extends StatelessWidget {
                   showPhoneCode: true,
                   showSearch: true,
                   countryListTheme: CountryListThemeData(
-                    bottomSheetHeight: MediaQuery.of(context).size.height * 0.5,
+                    backgroundColor: Colors.white,
+                    bottomSheetHeight: MediaQuery.of(context).size.height * 0.7,
                     padding: EdgeInsets.zero,
                   ),
                   onSelect: (country) {
@@ -32,25 +33,30 @@ class PhoneCountryCode extends StatelessWidget {
                   },
                 );
               },
-              child: Container(
-                height: 51,
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xffb8b8b8)),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(controller.selectedCountry.flagEmoji),
-                    const SizedBox(width: 5),
-                    Text('+${controller.selectedCountry.phoneCode}'),
-                    const Icon(
+              child: AbsorbPointer(
+                child: SizedBox(
+                  width: 100,
+                  child: CustomTextFormField(
+                    controller: TextEditingController(),
+                    readOnly: true,
+                    prefixIconWidget: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(width: 8),
+                        Text(
+                          controller.selectedCountry.flagEmoji,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        const SizedBox(width: 4),
+                        Text('+${controller.selectedCountry.phoneCode}'),
+                      ],
+                    ),
+                    suffixIcon: const Icon(
                       Icons.keyboard_arrow_down,
                       size: 16,
-                      color: Color(0xff29209a),
+                      color: Color(0xff757684),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -62,7 +68,8 @@ class PhoneCountryCode extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icons.phone_android,
-                validator: Validators.phone,
+                validator: (value) =>
+                    Validators.phone(value, controller.selectedCountry),
               ),
             ),
           ],

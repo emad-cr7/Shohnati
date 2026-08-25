@@ -1,3 +1,5 @@
+import 'package:country_picker/country_picker.dart';
+
 class Validators {
   // Required
   static String? required(String? value, String message) {
@@ -35,13 +37,24 @@ class Validators {
   }
 
   // Mobile
-  static String? phone(String? value) {
+  static String? phone(String? value, Country country) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your Phone number';
     }
 
-    if (!RegExp(r'^(01)[0-9]{9}$').hasMatch(value.trim())) {
-      return 'Please enter a valid Phone number';
+    final trimmedValue = value.trim();
+    // لو الدولة مصر، سيب نفس الريجيكس بتاعك
+    if (country.countryCode == 'EG') {
+      if (!RegExp(r'^(01)[0-9]{9}$').hasMatch(trimmedValue)) {
+        return 'Please enter a valid Egyptian Phone number';
+      }
+      return null;
+    }
+
+    // لأي دولة تانية: تحقق من الطول بس بناءً على مثال الباكدج
+    final expectedLength = country.example.length;
+    if (trimmedValue.length != expectedLength) {
+      return 'Please enter a valid Phone number for ${country.name}';
     }
 
     return null;
@@ -105,10 +118,7 @@ class Validators {
   }
 
   // Confirm Password
-  static String? confirmPassword(
-      String? value,
-      String password,
-      ) {
+  static String? confirmPassword(String? value, String password) {
     if (value == null || value.isEmpty) {
       return 'Please confirm your password';
     }

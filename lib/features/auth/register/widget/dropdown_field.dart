@@ -25,12 +25,13 @@ class DropdownField extends StatelessWidget {
         const SizedBox(height: 8),
 
         // Region
-        CustomDropdownFormField(
+        ZoneDropdownFormField(
           value: controller.selectedRegion,
           hintText: 'Region',
           prefixIcon: Icons.location_on_outlined,
           items: controller.regions,
           onChanged: controller.selectRegion,
+          enabled: controller.selectedCity != null,
         ),
 
         const SizedBox(height: 8),

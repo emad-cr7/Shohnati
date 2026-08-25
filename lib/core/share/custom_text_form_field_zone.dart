@@ -8,6 +8,8 @@ class ZoneDropdownFormField extends StatelessWidget {
   final List<ZoneModel> items;
   final ValueChanged<ZoneModel?> onChanged;
 
+  final bool enabled;
+
   const ZoneDropdownFormField({
     super.key,
     required this.value,
@@ -15,6 +17,7 @@ class ZoneDropdownFormField extends StatelessWidget {
     required this.prefixIcon,
     required this.items,
     required this.onChanged,
+    this.enabled = true,
   });
 
   void showItems(BuildContext context) {
@@ -56,13 +59,21 @@ class ZoneDropdownFormField extends StatelessWidget {
                         itemCount: items.length,
                         itemBuilder: (context, index) {
                           final item = items[index];
+
                           return Column(
                             children: [
                               ListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: Text(item.name, textAlign: TextAlign.right),
+                                title: Text(
+                                  item.name,
+                                  textAlign: TextAlign.right,
+                                ),
                                 trailing: value?.id == item.id
-                                    ? const Icon(Icons.check, color: Color(0xff29209a), size: 20)
+                                    ? const Icon(
+                                  Icons.check,
+                                  color: Color(0xff29209a),
+                                  size: 20,
+                                )
                                     : null,
                                 onTap: () {
                                   onChanged(item);
@@ -70,7 +81,11 @@ class ZoneDropdownFormField extends StatelessWidget {
                                 },
                               ),
                               if (index != items.length - 1)
-                                const Divider(height: 1, thickness: 1, color: Colors.grey),
+                                const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                  color: Colors.grey,
+                                ),
                             ],
                           );
                         },
@@ -88,18 +103,41 @@ class ZoneDropdownFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = enabled
+        ? const Color(0xff29209a)
+        : Colors.grey;
     return GestureDetector(
-      onTap: () => showItems(context),
+      onTap: enabled ? () => showItems(context) : null,
+
+
       child: SizedBox(
         width: double.infinity,
         height: 55,
         child: InputDecorator(
           decoration: InputDecoration(
             hintText: hintText,
-            prefixIcon: Icon(prefixIcon, color: const Color(0xff29209a), size: 22),
-            suffixIcon: const Icon(Icons.keyboard_arrow_down, size: 22, color: Color(0xff29209a)),
+
+            prefixIcon: Icon(
+              prefixIcon,
+              color: color,
+              size: 22,
+            ),
+
+            suffixIcon: Icon(
+              Icons.keyboard_arrow_down,
+              size: 22,
+              color: color,
+            ),
           ),
-          child: Text(value?.name ?? hintText),
+
+          child: Text(
+            value?.name ?? hintText,
+            style: TextStyle(
+              color: enabled
+                  ? Colors.black
+                  : Colors.grey,
+            ),
+          ),
         ),
       ),
     );
