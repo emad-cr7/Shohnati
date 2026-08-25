@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'core/graphL/zone_service.dart';
+import 'core/graphL/register_service.dart';
 import 'core/theming/ThemeData.dart';
 import 'features/auth/login/login_screen.dart';
 
