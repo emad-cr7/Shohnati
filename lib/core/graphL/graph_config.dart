@@ -7,7 +7,10 @@ class GraphConfig {
     final HttpLink httpLink = HttpLink(_endpoint);
     return GraphQLClient(
       link: httpLink,
-      cache: GraphQLCache(store: InMemoryStore()),
+      cache: GraphQLCache(
+        store: InMemoryStore(),
+        dataIdFromObject: (object) => null,
+      ),
     );
   }
 }
