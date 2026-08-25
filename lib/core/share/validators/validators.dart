@@ -54,42 +54,12 @@ class Validators {
     // لأي دولة تانية: تحقق من الطول بس بناءً على مثال الباكدج
     final expectedLength = country.example.length;
     if (trimmedValue.length != expectedLength) {
-      return 'Please enter a valid Phone number for ${country.name}';
+      return 'Please enter a number for ${country.name}';
     }
 
     return null;
   }
 
-  // City
-  static String? city(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Please enter your city';
-    }
-
-    return null;
-  }
-
-  // Area
-  static String? area(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Please enter your area';
-    }
-
-    return null;
-  }
-
-  // Postal Code
-  static String? postalCode(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Please enter your postal code';
-    }
-
-    if (!RegExp(r'^[0-9]{5}$').hasMatch(value.trim())) {
-      return 'Please enter a valid postal code';
-    }
-
-    return null;
-  }
 
   // Address
   static String? address(String? value) {
@@ -112,19 +82,6 @@ class Validators {
 
     if (value.length < 6) {
       return 'Password must be at least 6 characters';
-    }
-
-    return null;
-  }
-
-  // Confirm Password
-  static String? confirmPassword(String? value, String password) {
-    if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
-    }
-
-    if (value != password) {
-      return 'Passwords do not match';
     }
 
     return null;
