@@ -115,11 +115,11 @@ final ThemeData lightTheme = ThemeData(
       color: Color(0xff3e3e42),
       fontSize: 14,
     ),
-    // titleMedium: TextStyle(
-    //   color: Color(0xff161F1B),
-    //   fontSize:  16,
-    //   fontWeight: FontWeight.w400,
-    // ),
+    titleMedium: TextStyle(
+      fontSize: 16,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
     // titleLarge: TextStyle(
     //   color: Color(0xff6A6A6A),
     //   fontSize:  16,
