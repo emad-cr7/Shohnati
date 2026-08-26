@@ -20,12 +20,9 @@ class OtpController extends ChangeNotifier {
     final code = otpController.text.trim();
     final context = navigatorKey.currentContext;
 
-    if (code.length != 4) {//
+    if (code.length != 4) {
       if (context != null) {
-        AppDialogs.showError(
-          context,
-          message: 'Please enter the 4-digit code.',
-        );
+        AppDialogs.showError(context, message: 'Please enter the 4-digit code.');
       }
       return;
     }
