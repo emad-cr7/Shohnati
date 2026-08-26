@@ -107,7 +107,9 @@ class LoginScreen extends StatelessWidget {
                                       controller.login();
                                     },
                                     child: controller.isLoading
-                                        ? CircularProgressIndicator()
+                                        ? CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
                                         : Text(
                                             "Login",
                                             style: TextStyle(
@@ -158,21 +160,21 @@ class LoginScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return OtpScreen(
-                                      email: 'emadmarey29@gmail.com',
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: Text('OTP'),
-                          ),
+                          // TextButton(
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (BuildContext context) {
+                          //           return OtpScreen(
+                          //             email: 'emadmarey29@gmail.com',
+                          //           );
+                          //         },
+                          //       ),
+                          //     );
+                          //   },
+                          //   child: Text('OTP'),
+                          // ),
                         ],
                       ),
                     ),

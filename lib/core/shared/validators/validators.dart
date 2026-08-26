@@ -38,6 +38,7 @@ class Validators {
 
   // Mobile
   static String? phone(String? value, Country country) {
+
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your Phone number';
     }

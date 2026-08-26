@@ -7,6 +7,7 @@ import '../data/models/zone_model.dart';
 import '../data/services/auth_service.dart';
 import '../data/services/register_service.dart';
 import 'helpers/register_helper.dart';
+import 'otp/otp_screen.dart';
 
 class RegisterController extends ChangeNotifier {
   // ------------------------------variables--------------------------------
@@ -103,7 +104,7 @@ class RegisterController extends ChangeNotifier {
   // ------------------------------register--------------------------------
 
   Future<void> register() async {
-    if (key.currentState!.validate()) {
+    if (!key.currentState!.validate()) {
       return;
     }
     isRegistering = true;
@@ -123,9 +124,18 @@ class RegisterController extends ChangeNotifier {
         postalCode: '11511',
       );
 
-      if (!success) {
-        final context = navigatorKey.currentContext;
+      final context = navigatorKey.currentContext;
 
+      if (success) {
+        if (context != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => OtpScreen(),
+            ),
+          );
+        }
+      } else {
         if (context != null) {
           AppDialogs.showError(
             context,
@@ -143,15 +153,18 @@ class RegisterController extends ChangeNotifier {
       if (isEmailTaken && isMobileTaken) {
         AppDialogs.showError(
           context,
-          message: 'البريد الإلكتروني ورقم الهاتف مستخدمان من قبل.',
+          message: 'The email and phone number are already in use.',
         );
       } else if (isEmailTaken) {
         AppDialogs.showError(
           context,
-          message: 'هذا البريد الإلكتروني مستخدم من قبل.',
+          message: 'This email address is already in use.',
         );
       } else if (isMobileTaken) {
-        AppDialogs.showError(context, message: 'رقم الهاتف هذا مستخدم من قبل.');
+        AppDialogs.showError(
+          context,
+          message: 'This phone number is already in use.',
+        );
       }
     } finally {
       isRegistering = false;

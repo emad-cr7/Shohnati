@@ -1,54 +1,38 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AppDialogs {
   static void showError(
-    BuildContext context, {
-    String title = 'Error',
-    required String message,
-  }) {
-    showDialog(
+      BuildContext context, {
+        String title = 'Error',
+        required String message,
+      }) {
+    AwesomeDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Ok'),
-          ),
-        ],
-      ),
-    );
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: title,
+      desc: message,
+      btnOkText: 'OK',
+      btnOkOnPress: () {},
+    ).show();
   }
 
   static void showAlreadyRegistered(
-
-    BuildContext context, {
-    VoidCallback? onLoginPressed,
-  }) {
-    showDialog(
+      BuildContext context, {
+        VoidCallback? onLoginPressed,
+      }) {
+    AwesomeDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('The account already exists.'),
-        content: const Text(
-          'Email or mobile number already registered. Please log in instead.',
-        ),
-        actions: [
-          if (onLoginPressed != null)
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                onLoginPressed();
-              },
-              child: const Text('Log in'),
-            ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('ok'),
-          ),
-        ],
-      ),
-    );
+      dialogType: DialogType.warning,
+      animType: AnimType.scale,
+      title: 'The account already exists.',
+      desc:
+      'Email or mobile number already registered. Please log in instead.',
+      btnOkText: 'OK',
+      btnOkOnPress: () {},
+      btnCancelText: onLoginPressed != null ? 'Log in' : null,
+      btnCancelOnPress: onLoginPressed,
+    ).show();
   }
 }

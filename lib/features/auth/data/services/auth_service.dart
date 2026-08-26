@@ -78,7 +78,7 @@ class AuthService {
     );
     if (result.hasException) {
 
-      log('❌ Verify Email Error');
+      log('❌ register  Error');
 
       log('Exception: ${result.exception}');
 
@@ -138,7 +138,7 @@ class AuthService {
 
     if (result.hasException) {
 
-      log('❌ Verify Email Error');
+      log('❌ resendVerificationCode Email Error');
       log('Exception: ${result.exception}');
       log('GraphQL Errors: ${result.exception?.graphqlErrors}');
       log('Link Exception: ${result.exception?.linkException}');

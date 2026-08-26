@@ -151,7 +151,9 @@ class RegisterScreen extends StatelessWidget {
                                         controller.register();
                                       },
                                       child: controller.isRegistering
-                                          ? CircularProgressIndicator()
+                                          ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
                                           : Text(
                                               "Login",
                                               style: Theme.of(
