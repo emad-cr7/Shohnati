@@ -93,6 +93,7 @@ class OtpController extends ChangeNotifier {
 
   @override
   void dispose() {
+    _resendTimer?.cancel();
     otpController.dispose();
     super.dispose();
   }
