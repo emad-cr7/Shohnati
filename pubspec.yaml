@@ -40,6 +40,8 @@ dependencies:
   provider: ^6.1.5+1
   pinput: ^6.0.2
   shared_preferences: ^2.5.5
+  awesome_dialog: ^3.0.2
+
 
 
 
