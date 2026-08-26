@@ -106,13 +106,15 @@ class LoginScreen extends StatelessWidget {
                                     onPressed: () {
                                       controller.login();
                                     },
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    child: controller.isLoading
+                                        ? CircularProgressIndicator()
+                                        : Text(
+                                            "Login",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                   ),
                                 ),
                                 SizedBox(height: 30),
@@ -155,6 +157,21 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return OtpScreen(
+                                      email: 'emadmarey29@gmail.com',
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text('OTP'),
                           ),
                         ],
                       ),
