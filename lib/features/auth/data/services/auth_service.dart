@@ -26,8 +26,15 @@ class AuthService {
     );
 
     if (result.hasException) {
-      log('Login Error: ${result.exception.toString()}');
-      throw Exception(result.exception.toString());
+      final errors = result.exception?.graphqlErrors;
+
+      final message = errors != null && errors.isNotEmpty
+          ? errors.first.message
+          : 'حدث خطأ أثناء تسجيل الدخول';
+
+      log('Login Error: $message');
+
+      throw Exception(message);
     }
 
     return result.data?['login'];
