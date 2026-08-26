@@ -9,6 +9,9 @@ class AuthService {
   final GraphQLClient client = GraphConfig.client();
 
 
+  //--------------------------login---------------------------------
+
+
   Future<Map<String, dynamic>?> login({
     required String username,
     required String password,
@@ -39,6 +42,8 @@ class AuthService {
 
     return result.data?['login'];
   }
+
+  //--------------------------register---------------------------------
 
 
   Future<bool> register({
@@ -72,13 +77,23 @@ class AuthService {
       ),
     );
     if (result.hasException) {
+
+      log('❌ Verify Email Error');
+
+      log('Exception: ${result.exception}');
+
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+
+      log('Link Exception: ${result.exception?.linkException}');
       throw Exception(result.exception.toString());
     }
     return result.data?['register'] ?? false;
   }
 
+  //--------------------------verifyRegistrationEmail---------------------
 
-  Future<Map<String, dynamic>?> verifyRegistrationEmail({
+
+  Future<Map<String, dynamic>> verifyRegistrationEmail({
     required String email,
     required String code,
     String? fcmToken,
@@ -91,10 +106,27 @@ class AuthService {
     );
 
     if (result.hasException) {
+
+      //إحنا دخلنا حالة إن فيه Error أثناء Verify Email
+      log('❌ Verify Email Error');
+
+      //ريني الخطأ الأساسي بكل التفاصيل اللي عندك.
+      log('Exception: ${result.exception}');
+
+      //الطلب وصل للسيرفر، لكن GraphQL رجع مشكلة في تنفيذ العملية
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+
+      //أوقف تنفيذ الفانكشن الحالية وارمي الخطأ للفانكشن اللي استدعتني.
+      log('Link Exception: ${result.exception?.linkException}');
       throw Exception(result.exception.toString());
     }
     return result.data?['verifyRegistrationEmail'];
   }
+
+
+
+  //--------------------------resendVerificationCode---------------------
+
 
   Future<bool> resendVerificationCode(String email) async {
     final result = await client.mutate(
@@ -105,7 +137,11 @@ class AuthService {
     );
 
     if (result.hasException) {
-      log('Resend Code Error: ${result.exception.toString()}');
+
+      log('❌ Verify Email Error');
+      log('Exception: ${result.exception}');
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+      log('Link Exception: ${result.exception?.linkException}');
       throw Exception(result.exception.toString());
     }
     return result.data?['resendVerificationCode'] ?? false;

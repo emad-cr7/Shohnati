@@ -1,4 +1,8 @@
 class AuthQueries {
+
+
+  //----------------------login ---------------------------
+
   static const String loginMutation = r'''
 mutation Login($username: String!, $password: String!, $rememberMe: Boolean!) {
   login(input: {
@@ -17,6 +21,7 @@ mutation Login($username: String!, $password: String!, $rememberMe: Boolean!) {
   }
 }
 ''';
+  //----------------------register ---------------------------
 
   static const String registerMutation = r'''
 mutation Register(
@@ -48,6 +53,8 @@ mutation Register(
 }
 ''';
 
+  //-------------------- كود التحقق اللي جالك على الإيميل بعد التسجيل.---------------
+
   static const String verifyEmailMutation = r'''
 mutation VerifyRegistrationEmail(
   $email: String!
@@ -70,6 +77,9 @@ mutation VerifyRegistrationEmail(
   }
 }
 ''';
+
+  //-------------------------- إعادة إرسال كود التحقق.----------------------
+
 
   static const String resendCodeMutation = r'''
 mutation ResendVerificationCode($email: String!) {
