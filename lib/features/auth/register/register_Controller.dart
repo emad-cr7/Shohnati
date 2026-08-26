@@ -1,11 +1,14 @@
-import 'dart:developer';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:sh7naty/features/auth/login/login_screen.dart';
+import '../../../core/shared/app_dialogs.dart';
 import '../../../main.dart';
 import '../data/models/zone_model.dart';
 import '../data/services/auth_service.dart';
 import '../data/services/register_service.dart';
+import '../login/login_screen.dart';
+import 'errors/error_messages.dart';
+import 'helpers/register_helper.dart';
+import 'otp/otp_screen.dart';
 
 class RegisterController extends ChangeNotifier {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
@@ -25,6 +28,12 @@ class RegisterController extends ChangeNotifier {
   bool isZonesLoading = false;
   bool isRegionsLoading = false;
 
+  List<ZoneModel> zones = [];
+  List<ZoneModel> regions = [];
+  Country selectedCountry = RegisterHelper().country;
+  final List<String> paymentTypes = RegisterHelper().paymentTypes;
+
+
   final AuthService authService = AuthService();
   bool isRegistering = false;
 
@@ -33,15 +42,12 @@ class RegisterController extends ChangeNotifier {
   }
 
   final RegisterService registerService = RegisterService();
-  List<ZoneModel> zones = [];
 
   Future<void> fetchZones() async {
     isZonesLoading = true;
     notifyListeners();
     try {
       zones = await registerService.getZones();
-    } catch (e) {
-      log('Error fetching zones: $e');
     } finally {
       isZonesLoading = false;
       notifyListeners();
@@ -53,21 +59,17 @@ class RegisterController extends ChangeNotifier {
     selectedRegion = null;
     regions = [];
     notifyListeners();
-
     if (value != null) {
       fetchRegions();
     }
   }
 
-  List<ZoneModel> regions = [];
 
   Future<void> fetchRegions() async {
     isRegionsLoading = true;
     notifyListeners();
     try {
       regions = await registerService.getRegions(int.parse(selectedCity!.id));
-    } catch (e) {
-      log('Error fetching regions: $e');
     } finally {
       isRegionsLoading = false;
       notifyListeners();
@@ -79,51 +81,17 @@ class RegisterController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Country selectedCountry = Country(
-    phoneCode: '20',
-    countryCode: 'EG',
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: 'Egypt',
-    example: '1001234567',
-    displayName: 'Egypt',
-    displayNameNoCountryCode: 'Egypt',
-    e164Key: '',
-  );
 
   void updateSelectedCountry(Country country) {
     selectedCountry = country;
     notifyListeners();
   }
 
-  final List<String> paymentTypes = [
-    'Cash on Delivery',
-    'Online Payment',
-    'Bank Transfer',
-  ];
 
   void selectPayment(String? value) {
     selectedPayment = value;
     notifyListeners();
   }
-
-  String _mapPaymentCode(String? payment) {
-    switch (payment) {
-      case 'Cash on Delivery':
-        return 'CSH';
-
-      case 'Online Payment':
-        return 'ONLINE_PAYMENT';
-
-      case 'Bank Transfer':
-        return 'BANK_TRANSFER';
-
-      default:
-        return 'CSH';
-    }
-  }
-
   void togglePassword() {
     obscurePassword = !obscurePassword;
     notifyListeners();
@@ -135,7 +103,6 @@ class RegisterController extends ChangeNotifier {
     }
     isRegistering = true;
     notifyListeners();
-
     try {
       final success = await authService.register(
         businessName: storeNameController.text.trim(),
@@ -145,30 +112,57 @@ class RegisterController extends ChangeNotifier {
         zoneId: int.parse(selectedCity!.id),
         subzoneId: int.parse(selectedRegion!.id),
         address: addressController.text.trim(),
-        paymentMethodCode: _mapPaymentCode(selectedPayment),
+        paymentMethodCode: RegisterHelper.mapPaymentCode(selectedPayment),
         password: passwordController.text,
         postalCode: '11511',
       );
-      if (success) {
-        log('REGISTER SUCCESS = true');
-        log('NAVIGATOR = ${navigatorKey.currentState}');
 
-        navigatorKey.currentState?.pushReplacement(
+      if (success) {
+        navigatorKey.currentState?.push(
           MaterialPageRoute(
-            builder: (context) => LoginScreen(),
+            builder: (context) => OtpScreen(email: emailController.text.trim()),
           ),
         );
       } else {
-        log('REGISTER SUCCESS = false');
+        final context = navigatorKey.currentContext;
+        if (context != null) {
+          AppDialogs.showError(
+            context,
+            message: 'Registration failed, please try again.',
+          );
+        }
       }
     } catch (e) {
-      log('Register Error: $e');
+      final context = navigatorKey.currentContext;
+      if (context == null) return;
+
+      final errorStr = e.toString();
+
+      if (errorStr.contains('مُستخدمة من قبل') ||
+          errorStr.contains('already') ||
+          errorStr.contains('taken')) {
+        AppDialogs.showAlreadyRegistered(
+          context,
+          onLoginPressed: () {
+            navigatorKey.currentState?.pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+                  (route) => false,
+            );
+          },
+        );
+      } else {
+        AppDialogs.showError(
+          context,
+          message: ErrorMessages.registrationFailed,
+        );
+      }
     } finally {
       isRegistering = false;
       notifyListeners();
     }
   }
-
   @override
   void dispose() {
     storeNameController.dispose();

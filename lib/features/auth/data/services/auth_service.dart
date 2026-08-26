@@ -20,7 +20,6 @@ class AuthService {
     required String paymentMethodCode,
     required String password,
   }) async {
-    log('POSTAL CODE: $postalCode');
     final result = await client.mutate(
       MutationOptions(
         document: gql(AuthQueries.registerMutation),
@@ -39,12 +38,48 @@ class AuthService {
         },
       ),
     );
+    log('HAS EXCEPTION: ${result.hasException}');
+    log('DATA: ${result.data}');
+    log('EXCEPTION: ${result.exception}');
 
     if (result.hasException) {
-      log('Register Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+    return result.data?['register'] ?? false;
+  }
+
+
+  Future<Map<String, dynamic>?> verifyRegistrationEmail({
+    required String email,
+    required String code,
+    String? fcmToken,
+  }) async {
+    final result = await client.mutate(
+      MutationOptions(
+        document: gql(AuthQueries.verifyEmailMutation),
+        variables: {'email': email, 'code': code, 'fcmToken': fcmToken},
+      ),
+    );
+
+    if (result.hasException) {
+      throw Exception(result.exception.toString());
+    }
+    return result.data?['verifyRegistrationEmail'];
+  }
+
+  Future<bool> resendVerificationCode(String email) async {
+    final result = await client.mutate(
+      MutationOptions(
+        document: gql(AuthQueries.resendCodeMutation),
+        variables: {'email': email},
+      ),
+    );
+
+    if (result.hasException) {
+      log('Resend Code Error: ${result.exception.toString()}');
       throw Exception(result.exception.toString());
     }
 
-    return result.data?['register'] ?? false;
+    return result.data?['resendVerificationCode'] ?? false;
   }
 }
