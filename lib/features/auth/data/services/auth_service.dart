@@ -8,6 +8,32 @@ import '../queries/auth_queries.dart';
 class AuthService {
   final GraphQLClient client = GraphConfig.client();
 
+
+  Future<Map<String, dynamic>?> login({
+    required String username,
+    required String password,
+    required bool rememberMe,
+  }) async {
+    final result = await client.mutate(
+      MutationOptions(
+        document: gql(AuthQueries.loginMutation),
+        variables: {
+          'username': username,
+          'password': password,
+          'rememberMe': rememberMe,
+        },
+      ),
+    );
+
+    if (result.hasException) {
+      log('Login Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+
+    return result.data?['login'];
+  }
+
+
   Future<bool> register({
     required String businessName,
     required String name,
