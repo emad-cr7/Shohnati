@@ -38,7 +38,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   country_picker: ^2.0.27
   provider: ^6.1.5+1
-
+  pinput: ^6.0.2
 
 
 
