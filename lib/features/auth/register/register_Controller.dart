@@ -21,7 +21,7 @@ class RegisterController extends ChangeNotifier {
 
   bool obscurePassword = true;
 
-  ZoneModel? selectedCity;
+  ZoneModel? selectedZones;
   ZoneModel? selectedRegion;
 
   String? selectedPayment;
@@ -54,8 +54,8 @@ class RegisterController extends ChangeNotifier {
     }
   }
 
-  void selectCity(ZoneModel? value) {
-    selectedCity = value;
+  void selectZones(ZoneModel? value) {
+    selectedZones = value;
     selectedRegion = null;
     regions = [];
     notifyListeners();
@@ -69,7 +69,7 @@ class RegisterController extends ChangeNotifier {
     isRegionsLoading = true;
     notifyListeners();
     try {
-      regions = await registerService.getRegions(int.parse(selectedCity!.id));
+      regions = await registerService.getRegions(int.parse(selectedZones!.id));
     } finally {
       isRegionsLoading = false;
       notifyListeners();
@@ -109,7 +109,7 @@ class RegisterController extends ChangeNotifier {
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         mobile: phoneController.text.trim(),
-        zoneId: int.parse(selectedCity!.id),
+        zoneId: int.parse(selectedZones!.id),
         subzoneId: int.parse(selectedRegion!.id),
         address: addressController.text.trim(),
         paymentMethodCode: RegisterHelper.mapPaymentCode(selectedPayment),

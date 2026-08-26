@@ -16,11 +16,11 @@ class DropdownField extends StatelessWidget {
       children: [
         // Zone
         ZoneDropdownFormField(
-          value: controller.selectedCity,
+          value: controller.selectedZones,
           hintText: 'zone',
           prefixIcon: Icons.location_city,
           items: controller.zones,
-          onChanged: controller.selectCity,
+          onChanged: controller.selectZones,
         ),
 
         const SizedBox(height: 8),
@@ -32,7 +32,7 @@ class DropdownField extends StatelessWidget {
           prefixIcon: Icons.location_on_outlined,
           items: controller.regions,
           onChanged: controller.selectRegion,
-          enabled: controller.selectedCity != null,
+          enabled: controller.selectedZones != null,
         ),
 
         const SizedBox(height: 8),
