@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../core/shared/app_dialogs.dart';
@@ -5,12 +6,11 @@ import '../../../main.dart';
 import '../data/models/zone_model.dart';
 import '../data/services/auth_service.dart';
 import '../data/services/register_service.dart';
-import '../login/login_screen.dart';
-import 'errors/error_messages.dart';
 import 'helpers/register_helper.dart';
-import 'otp/otp_screen.dart';
 
 class RegisterController extends ChangeNotifier {
+  // ------------------------------variables--------------------------------
+
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final TextEditingController storeNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -18,30 +18,34 @@ class RegisterController extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final RegisterService registerService = RegisterService();
+  final AuthService authService = AuthService();
   bool obscurePassword = true;
-
   ZoneModel? selectedZones;
   ZoneModel? selectedRegion;
-
   String? selectedPayment;
   bool isZonesLoading = false;
   bool isRegionsLoading = false;
-
   List<ZoneModel> zones = [];
   List<ZoneModel> regions = [];
   Country selectedCountry = RegisterHelper().country;
   final List<String> paymentTypes = RegisterHelper().paymentTypes;
-
-
-  final AuthService authService = AuthService();
   bool isRegistering = false;
+
+  // ------------------------------init--------------------------------
 
   init() {
     fetchZones();
   }
 
-  final RegisterService registerService = RegisterService();
+  // ------------------------------togglePassword--------------------------------
+
+  void togglePassword() {
+    obscurePassword = !obscurePassword;
+    notifyListeners();
+  }
+
+  // ------------------------------fetchZones--------------------------------
 
   Future<void> fetchZones() async {
     isZonesLoading = true;
@@ -64,6 +68,7 @@ class RegisterController extends ChangeNotifier {
     }
   }
 
+  // ------------------------------fetchRegions--------------------------------
 
   Future<void> fetchRegions() async {
     isRegionsLoading = true;
@@ -81,28 +86,29 @@ class RegisterController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ------------------------------updateSelectedCountry--------------------------------
 
   void updateSelectedCountry(Country country) {
     selectedCountry = country;
     notifyListeners();
   }
 
+  // ------------------------------selectPayment--------------------------------
 
   void selectPayment(String? value) {
     selectedPayment = value;
     notifyListeners();
   }
-  void togglePassword() {
-    obscurePassword = !obscurePassword;
-    notifyListeners();
-  }
+
+  // ------------------------------register--------------------------------
 
   Future<void> register() async {
-    if (!key.currentState!.validate()) {
+    if (key.currentState!.validate()) {
       return;
     }
     isRegistering = true;
     notifyListeners();
+
     try {
       final success = await authService.register(
         businessName: storeNameController.text.trim(),
@@ -117,14 +123,9 @@ class RegisterController extends ChangeNotifier {
         postalCode: '11511',
       );
 
-      if (success) {
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-            builder: (context) => OtpScreen(email: emailController.text.trim()),
-          ),
-        );
-      } else {
+      if (!success) {
         final context = navigatorKey.currentContext;
+
         if (context != null) {
           AppDialogs.showError(
             context,
@@ -135,34 +136,31 @@ class RegisterController extends ChangeNotifier {
     } catch (e) {
       final context = navigatorKey.currentContext;
       if (context == null) return;
-
       final errorStr = e.toString();
+      final isEmailTaken = errorStr.contains('input.email');
+      final isMobileTaken = errorStr.contains('input.mobile');
 
-      if (errorStr.contains('مُستخدمة من قبل') ||
-          errorStr.contains('already') ||
-          errorStr.contains('taken')) {
-        AppDialogs.showAlreadyRegistered(
-          context,
-          onLoginPressed: () {
-            navigatorKey.currentState?.pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(),
-              ),
-                  (route) => false,
-            );
-          },
-        );
-      } else {
+      if (isEmailTaken && isMobileTaken) {
         AppDialogs.showError(
           context,
-          message: ErrorMessages.registrationFailed,
+          message: 'البريد الإلكتروني ورقم الهاتف مستخدمان من قبل.',
         );
+      } else if (isEmailTaken) {
+        AppDialogs.showError(
+          context,
+          message: 'هذا البريد الإلكتروني مستخدم من قبل.',
+        );
+      } else if (isMobileTaken) {
+        AppDialogs.showError(context, message: 'رقم الهاتف هذا مستخدم من قبل.');
       }
     } finally {
       isRegistering = false;
       notifyListeners();
     }
   }
+
+  // ------------------------------dispose--------------------------------
+
   @override
   void dispose() {
     storeNameController.dispose();
