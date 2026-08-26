@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../../core/shared/app_dialogs.dart';
@@ -7,12 +8,35 @@ import '../../data/services/auth_service.dart';
 
 class OtpController extends ChangeNotifier {
   final String email;
-  OtpController({required this.email});
+
+  OtpController({required this.email}) {
+    log('OTP Controller email: $email'); // ← هنا بالظبط
+  }
 
   final AuthService authService = AuthService();
   final TextEditingController otpController = TextEditingController();
   bool isVerifying = false;
   bool isResending = false;
+
+  // ------------------------------resend cooldown--------------------------------
+
+  static const int resendCooldownSeconds = 120;
+  int resendSecondsLeft = 0;
+  Timer? _resendTimer;
+  bool get canResend => resendSecondsLeft == 0;//
+
+  void startResendTimer() {
+    resendSecondsLeft = resendCooldownSeconds;
+    _resendTimer?.cancel();
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (resendSecondsLeft == 0) {
+        timer.cancel();
+        return;
+      }
+      resendSecondsLeft--;
+      notifyListeners();
+    });
+  }
 
   // ------------------------------verify--------------------------------
 
@@ -22,7 +46,10 @@ class OtpController extends ChangeNotifier {
 
     if (code.length != 4) {
       if (context != null) {
-        AppDialogs.showError(context, message: 'Please enter the 4-digit code.');
+        AppDialogs.showError(
+          context,
+          message: 'Please enter the 4-digit code.',
+        );
       }
       return;
     }
@@ -64,6 +91,7 @@ class OtpController extends ChangeNotifier {
   // ------------------------------resend--------------------------------
 
   Future<void> resend() async {
+    if (!canResend) return;
     isResending = true;
     notifyListeners();
 
@@ -76,6 +104,7 @@ class OtpController extends ChangeNotifier {
           message: 'A new code has been sent to your email.',
         );
       }
+      startResendTimer();
     } catch (e) {
       log('Resend OTP Error: $e');
       final ctx = navigatorKey.currentContext;

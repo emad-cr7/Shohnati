@@ -131,7 +131,7 @@ class RegisterController extends ChangeNotifier {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => OtpScreen(),
+              builder: (_) => OtpScreen(email: emailController.text.trim(),),
             ),
           );
         }

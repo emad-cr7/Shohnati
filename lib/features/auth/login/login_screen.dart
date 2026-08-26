@@ -160,21 +160,21 @@ class LoginScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // TextButton(
-                          //   onPressed: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (BuildContext context) {
-                          //           return OtpScreen(
-                          //             email: 'emadmarey29@gmail.com',
-                          //           );
-                          //         },
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: Text('OTP'),
-                          // ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return OtpScreen(
+                                      email: 'emadmarri49@gmail.com',
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text('OTP'),
+                          ),
                         ],
                       ),
                     ),

@@ -16,6 +16,20 @@ class AppDialogs {
       btnOkText: 'OK',
       btnOkOnPress: () {},
     ).show();
+  } static void showSuccess(
+      BuildContext context, {
+        String title = 'Success',
+        required String message,
+      }) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: title,
+      desc: message,
+      btnOkText: 'OK',
+      btnOkOnPress: () {},
+    ).show();
   }
 
   static void showAlreadyRegistered(

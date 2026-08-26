@@ -17,29 +17,6 @@ class LoginController extends ChangeNotifier {
     if (!Key.currentState!.validate()) {
       return;
     }
-
-    try {
-      final loginData = await authService.login(
-        username: emailController.text.trim(),
-        password: passwordController.text,
-        rememberMe: true,
-      );
-
-      if (loginData != null) {
-        final token = loginData['token'];
-
-        if (token != null) {
-          await preferencesManager.setString(
-            'auth_token',
-            token,
-          );
-
-          print('Token Saved: $token');
-        }
-      }
-    } catch (e) {
-      print('Login Error: $e');
-    }
   }
 
   void togglePassword() {
