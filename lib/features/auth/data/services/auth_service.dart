@@ -38,10 +38,6 @@ class AuthService {
         },
       ),
     );
-    log('HAS EXCEPTION: ${result.hasException}');
-    log('DATA: ${result.data}');
-    log('EXCEPTION: ${result.exception}');
-
     if (result.hasException) {
       throw Exception(result.exception.toString());
     }
@@ -79,7 +75,6 @@ class AuthService {
       log('Resend Code Error: ${result.exception.toString()}');
       throw Exception(result.exception.toString());
     }
-
     return result.data?['resendVerificationCode'] ?? false;
   }
 }
