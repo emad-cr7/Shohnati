@@ -125,7 +125,16 @@ class RegisterController extends ChangeNotifier {
       );
       log('Register response: $success');
       final context = navigatorKey.currentContext;
-
+      if (selectedZones == null || selectedRegion == null) {
+        final context = navigatorKey.currentContext;
+        if (context != null) {
+          AppDialogs.showError(
+            context,
+            message: 'Please select zone and region.',
+          );
+        }
+        return;
+      }
       if (success) {
         if (context != null) {
           Navigator.push(
@@ -168,7 +177,7 @@ class RegisterController extends ChangeNotifier {
       } else {
         AppDialogs.showError(
           context,
-          message: 'Something went wrong, please try again.',
+            message: 'Something went wrong, please try again.',
         );
       }
     } finally {

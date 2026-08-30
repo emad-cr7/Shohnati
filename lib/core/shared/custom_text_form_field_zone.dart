@@ -1,4 +1,6 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+
 import '../../features/auth/data/models/zone_model.dart';
 
 class CustomTextFormFieldZone extends StatelessWidget {
@@ -7,7 +9,6 @@ class CustomTextFormFieldZone extends StatelessWidget {
   final IconData prefixIcon;
   final List<ZoneModel> items;
   final ValueChanged<ZoneModel?> onChanged;
-
   final bool enabled;
 
   const CustomTextFormFieldZone({
@@ -20,105 +21,99 @@ class CustomTextFormFieldZone extends StatelessWidget {
     this.enabled = true,
   });
 
-  void showItems(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-      ),
-      builder: (context) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.6,
-          minChildSize: 0.3,
-          maxChildSize: 0.6,
-          expand: false,
-          builder: (context, scrollController) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      hintText,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff29209a),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Expanded(
-                      child: ListView.builder(
-                              controller: scrollController,
-                              itemCount: items.length,
-                              itemBuilder: (context, index) {
-                                final item = items[index];
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      title: Text(
-                                        item.name,
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      trailing: value?.id == item.id
-                                          ? const Icon(
-                                              Icons.check,
-                                              color: Color(0xff29209a),
-                                              size: 20,
-                                            )
-                                          : null,
-                                      onTap: () {
-                                        onChanged(item);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    if (index != items.length - 1)
-                                      const Divider(
-                                        height: 1,
-                                        thickness: 1,
-                                        color: Colors.grey,
-                                      ),
-                                  ],
-                                );
-                              },
-                            ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final color = enabled ? const Color(0xff29209a) : Colors.grey;
-    return GestureDetector(
-      onTap: enabled ? () => showItems(context) : null,
+    return DropdownSearch<ZoneModel>(
+      enabled: enabled,
+      selectedItem: value,
+      items: (filter, infiniteScrollProps) => items,
+      itemAsString: (item) => item.name,
+      compareFn: (item1, item2) => item1.id == item2.id,
+      onSelected: onChanged,
+      decoratorProps: DropDownDecoratorProps(
+        decoration: InputDecoration(
+          hintText: hintText,
+          prefixIcon: Icon(prefixIcon, color: color, size: 22),
+          suffixIcon: Icon(Icons.keyboard_arrow_down, color: color, size: 22),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
 
-      child: SizedBox(
-        width: double.infinity,
-        height: 55,
-        child: InputDecorator(
-          decoration: InputDecoration(
-            hintText: hintText,
-
-            prefixIcon: Icon(prefixIcon, color: color, size: 22),
-
-            suffixIcon: Icon(Icons.keyboard_arrow_down, size: 22, color: color),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: color),
           ),
 
-          child: Text(
-            value?.name ?? hintText,
-            style: TextStyle(color: enabled ? Colors.black : Colors.grey),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: color, width: 2),
+          ),
+        ),
+      ),
+
+      popupProps: PopupProps.modalBottomSheet(
+        showSearchBox: true,
+
+        itemBuilder: (context, item, isDisabled, isSelected) {
+          final selected = value?.id == item.id;
+
+          return Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color(0xFFEAEAEA), width: 1),
+              ),
+            ),
+            child: Row(
+              children: [
+                if (selected)
+                  const Icon(Icons.check, color: Color(0xff29209a), size: 20),
+
+                const Spacer(),
+
+                Text(
+                  item.name,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isDisabled ? Colors.grey : Colors.black87,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        containerBuilder: (context, popupWidget) {
+          return Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+            ),
+            child: popupWidget,
+          );
+        },
+        searchFieldProps: TextFieldProps(
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            prefixIcon: const Icon(Icons.search),
+
+            filled: true,
+            fillColor: const Color(0xFFF7F7F7),
+
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xff29209a)),
+            ),
           ),
         ),
       ),
