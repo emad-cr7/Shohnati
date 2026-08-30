@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 30),
                                 CustomTextFormField(
-                                  title: 'username',
+                                  title: 'username / Email',
                                   controller: controller.usernameController,
                                   keyboardType: TextInputType.emailAddress,
                                   textInputAction: TextInputAction.next,

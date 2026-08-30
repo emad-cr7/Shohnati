@@ -37,25 +37,20 @@ class CustomTextFormFieldZone extends StatelessWidget {
           prefixIcon: Icon(prefixIcon, color: color, size: 22),
           suffixIcon: Icon(Icons.keyboard_arrow_down, color: color, size: 22),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: color),
           ),
-
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: color, width: 2),
           ),
         ),
       ),
-
       popupProps: PopupProps.modalBottomSheet(
         showSearchBox: true,
-
         itemBuilder: (context, item, isDisabled, isSelected) {
           final selected = value?.id == item.id;
-
           return Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -67,15 +62,14 @@ class CustomTextFormFieldZone extends StatelessWidget {
             child: Row(
               children: [
                 if (selected)
-                  const Icon(Icons.check, color: Color(0xff29209a), size: 20),
-
-                const Spacer(),
+                  Icon(Icons.check, color: Color(0xff29209a), size: 20),
+                Spacer(),
 
                 Text(
                   item.name,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 17,
                     color: isDisabled ? Colors.grey : Colors.black87,
                     fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
                   ),
@@ -97,7 +91,6 @@ class CustomTextFormFieldZone extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Search...',
             prefixIcon: const Icon(Icons.search),
-
             filled: true,
             fillColor: const Color(0xFFF7F7F7),
 
