@@ -4,7 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sh7naty/features/auth/data/queries/region_queries.dart';
 import 'package:sh7naty/features/auth/data/queries/zone_queries.dart';
 
-import '../../../../core/graphql/graph_config.dart';
+import '../../../../core/data_source/graphql/graph_config.dart';
 import '../models/zone_model.dart';
 
 

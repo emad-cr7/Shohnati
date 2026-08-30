@@ -123,7 +123,7 @@ class RegisterController extends ChangeNotifier {
         password: passwordController.text,
         postalCode: '11511',
       );
-
+      log('Register response: $success');
       final context = navigatorKey.currentContext;
 
       if (success) {
@@ -131,7 +131,7 @@ class RegisterController extends ChangeNotifier {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => OtpScreen(email: emailController.text.trim(),),
+              builder: (_) => OtpScreen(email: emailController.text.trim()),
             ),
           );
         }
@@ -164,6 +164,11 @@ class RegisterController extends ChangeNotifier {
         AppDialogs.showError(
           context,
           message: 'This phone number is already in use.',
+        );
+      } else {
+        AppDialogs.showError(
+          context,
+          message: 'Something went wrong, please try again.',
         );
       }
     } finally {

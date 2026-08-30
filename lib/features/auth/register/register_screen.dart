@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sh7naty/features/auth/register/register_Controller.dart';
+import 'package:sh7naty/features/auth/register/register_controller.dart';
 import 'package:sh7naty/features/auth/register/widgets/dropdown_field.dart';
 import 'package:sh7naty/features/auth/register/widgets/phone_country_code.dart';
 import '../../../core/shared/custom_text_formField.dart';
@@ -155,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                                               color: Colors.white,
                                             )
                                           : Text(
-                                              "Login",
+                                              "Create Account",
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.titleMedium,

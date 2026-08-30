@@ -10,7 +10,8 @@ class OtpController extends ChangeNotifier {
   final String email;
 
   OtpController({required this.email}) {
-    log('OTP Controller email: $email'); // ← هنا بالظبط
+    log('OTP Controller email: $email');
+
   }
 
   final AuthService authService = AuthService();

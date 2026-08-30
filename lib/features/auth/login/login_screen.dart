@@ -59,8 +59,8 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 30),
                                 CustomTextFormField(
-                                  title: 'Email',
-                                  controller: controller.emailController,
+                                  title: 'username',
+                                  controller: controller.usernameController,
                                   keyboardType: TextInputType.emailAddress,
                                   textInputAction: TextInputAction.next,
                                   prefixIcon: Icons.email,
@@ -159,21 +159,6 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return OtpScreen(
-                                      email: 'emadmarri49@gmail.com',
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: Text('OTP'),
                           ),
                         ],
                       ),

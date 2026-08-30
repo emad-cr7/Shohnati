@@ -22,9 +22,7 @@ class CustomDropdownFormField extends StatelessWidget {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       builder: (context) {
         return DraggableScrollableSheet(
@@ -61,7 +59,11 @@ class CustomDropdownFormField extends StatelessWidget {
                                 contentPadding: EdgeInsets.zero,
                                 title: Text(item, textAlign: TextAlign.right),
                                 trailing: value == item
-                                    ? const Icon(Icons.check, color: Color(0xff29209a), size: 20)
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Color(0xff29209a),
+                                        size: 20,
+                                      )
                                     : null,
                                 onTap: () {
                                   onChanged(item);
@@ -69,7 +71,11 @@ class CustomDropdownFormField extends StatelessWidget {
                                 },
                               ),
                               if (index != items.length - 1)
-                                const Divider(height: 1, thickness: 1, color: Colors.grey),
+                                const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                  color: Colors.grey,
+                                ),
                             ],
                           );
                         },
@@ -95,8 +101,16 @@ class CustomDropdownFormField extends StatelessWidget {
         child: InputDecorator(
           decoration: InputDecoration(
             hintText: hintText,
-            prefixIcon: Icon(prefixIcon, color: const Color(0xff29209a), size: 22),
-            suffixIcon: const Icon(Icons.keyboard_arrow_down, size: 22, color: Color(0xff29209a)),
+            prefixIcon: Icon(
+              prefixIcon,
+              color: const Color(0xff29209a),
+              size: 22,
+            ),
+            suffixIcon: const Icon(
+              Icons.keyboard_arrow_down,
+              size: 22,
+              color: Color(0xff29209a),
+            ),
           ),
           child: Text(value ?? hintText),
         ),

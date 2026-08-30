@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../../../../core/graphql/graph_config.dart';
+import '../../../../core/data_source/graphql/graph_config.dart';
 import '../queries/auth_queries.dart';
 
 class AuthService {

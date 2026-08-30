@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sh7naty/features/auth/register/register_Controller.dart';
-
-
+import 'package:sh7naty/features/auth/register/register_controller.dart';
 import '../../../../core/shared/custom_dropdown_form_field.dart';
 import '../../../../core/shared/custom_text_form_field_zone.dart';
 
@@ -15,7 +13,7 @@ class DropdownField extends StatelessWidget {
     return Column(
       children: [
         // Zone
-        ZoneDropdownFormField(
+        CustomTextFormFieldZone(
           value: controller.selectedZones,
           hintText: 'zone',
           prefixIcon: Icons.location_city,
@@ -26,7 +24,7 @@ class DropdownField extends StatelessWidget {
         const SizedBox(height: 8),
 
         // Region
-        ZoneDropdownFormField(
+        CustomTextFormFieldZone(
           value: controller.selectedRegion,
           hintText: 'Region',
           prefixIcon: Icons.location_on_outlined,

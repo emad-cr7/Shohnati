@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../features/auth/data/models/zone_model.dart';
 
-class ZoneDropdownFormField extends StatelessWidget {
+class CustomTextFormFieldZone extends StatelessWidget {
   final ZoneModel? value;
   final String hintText;
   final IconData prefixIcon;
@@ -9,9 +9,8 @@ class ZoneDropdownFormField extends StatelessWidget {
   final ValueChanged<ZoneModel?> onChanged;
 
   final bool enabled;
-  final bool isLoading;
 
-  const ZoneDropdownFormField({
+  const CustomTextFormFieldZone({
     super.key,
     required this.value,
     required this.hintText,
@@ -19,7 +18,6 @@ class ZoneDropdownFormField extends StatelessWidget {
     required this.items,
     required this.onChanged,
     this.enabled = true,
-    this.isLoading = false,
   });
 
   void showItems(BuildContext context) {
@@ -54,9 +52,7 @@ class ZoneDropdownFormField extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     Expanded(
-                      child: isLoading
-                          ? Center(child: CircularProgressIndicator())
-                          : ListView.builder(
+                      child: ListView.builder(
                               controller: scrollController,
                               itemCount: items.length,
                               itemBuilder: (context, index) {

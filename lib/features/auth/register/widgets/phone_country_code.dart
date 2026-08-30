@@ -2,7 +2,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/shared/custom_text_formField.dart';
 import '../../../../core/shared/validators/validators.dart';
-import '../register_Controller.dart';
+import '../register_controller.dart';
 
 class PhoneCountryCode extends StatelessWidget {
   const PhoneCountryCode({super.key, required this.controller});
