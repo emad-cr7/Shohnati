@@ -17,19 +17,10 @@ class RegisterScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back, color: Color(0xff303030)),
-          ),
         ),
-
         backgroundColor: Colors.white,
-
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 28, vertical: 5),
-
           child: Consumer<RegisterController>(
             builder:
                 (
@@ -102,17 +93,12 @@ class RegisterScreen extends StatelessWidget {
                                     prefixIcon: Icons.email,
                                     validator: Validators.email,
                                   ),
-
                                   SizedBox(height: 8),
-
                                   /// Phone - Country Code
                                   PhoneCountryCode(controller: controller),
-
                                   SizedBox(height: 8),
-
                                   /// Zone - Region  - Payment
                                   DropdownField(controller: controller),
-
                                   // Address
                                   CustomTextFormField(
                                     title: 'Address',

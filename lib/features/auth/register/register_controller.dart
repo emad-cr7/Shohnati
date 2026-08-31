@@ -11,7 +11,6 @@ import 'otp/otp_screen.dart';
 
 class RegisterController extends ChangeNotifier {
   // ------------------------------variables--------------------------------
-
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final TextEditingController storeNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -53,6 +52,8 @@ class RegisterController extends ChangeNotifier {
     notifyListeners();
     try {
       zones = await registerService.getZones();
+    } catch (e) {
+      log(e.toString());
     } finally {
       isZonesLoading = false;
       notifyListeners();
@@ -125,8 +126,12 @@ class RegisterController extends ChangeNotifier {
       );
       log('Register response: $success');
       final context = navigatorKey.currentContext;
+
       if (selectedZones == null || selectedRegion == null) {
+
         final context = navigatorKey.currentContext;
+
+
         if (context != null) {
           AppDialogs.showError(
             context,
@@ -135,6 +140,7 @@ class RegisterController extends ChangeNotifier {
         }
         return;
       }
+
       if (success) {
         if (context != null) {
           Navigator.push(
@@ -152,6 +158,8 @@ class RegisterController extends ChangeNotifier {
           );
         }
       }
+
+
     } catch (e) {
       final context = navigatorKey.currentContext;
       if (context == null) return;
@@ -177,7 +185,7 @@ class RegisterController extends ChangeNotifier {
       } else {
         AppDialogs.showError(
           context,
-            message: 'Something went wrong, please try again.',
+          message: 'Something went wrong, please try again.',
         );
       }
     } finally {
