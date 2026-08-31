@@ -36,7 +36,7 @@ class OtpScreen extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   TextField(
-                    controller: controller.otpController,
+                    controller: controller.otpCodeController,
                     keyboardType: TextInputType.number,
                     maxLength: 4,
                     textAlign: TextAlign.center,

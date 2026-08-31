@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:sh7naty/features/auth/login/login_screen.dart';
 import '../../../../core/shared/app_dialogs.dart';
 import '../../../../main.dart';
 import '../../../home/home_screen.dart';
@@ -11,11 +12,10 @@ class OtpController extends ChangeNotifier {
 
   OtpController({required this.email}) {
     log('OTP Controller email: $email');
-
   }
 
   final AuthService authService = AuthService();
-  final TextEditingController otpController = TextEditingController();
+  final TextEditingController otpCodeController = TextEditingController();
   bool isVerifying = false;
   bool isResending = false;
 
@@ -24,7 +24,8 @@ class OtpController extends ChangeNotifier {
   static const int resendCooldownSeconds = 120;
   int resendSecondsLeft = 0;
   Timer? _resendTimer;
-  bool get canResend => resendSecondsLeft == 0;//
+
+  bool get canResend => resendSecondsLeft == 0; //
 
   void startResendTimer() {
     resendSecondsLeft = resendCooldownSeconds;
@@ -42,7 +43,7 @@ class OtpController extends ChangeNotifier {
   // ------------------------------verify--------------------------------
 
   Future<void> verify() async {
-    final code = otpController.text.trim();
+    final code = otpCodeController.text.trim();
     final context = navigatorKey.currentContext;
 
     if (code.length != 4) {
@@ -65,21 +66,19 @@ class OtpController extends ChangeNotifier {
       );
 
       if (result['token'] != null) {
-        final ctx = navigatorKey.currentContext;
-        if (ctx != null) {
+        if (context != null) {
           Navigator.pushAndRemoveUntil(
-            ctx,
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            context,
+            MaterialPageRoute(builder: (_) => LoginScreen()),
             (route) => false,
           );
         }
       }
     } catch (e) {
       log('Verify OTP Error: $e');
-      final ctx = navigatorKey.currentContext;
-      if (ctx != null) {
+      if (context != null) {
         AppDialogs.showError(
-          ctx,
+          context,
           message: 'Invalid or expired code, please try again.',
         );
       }
@@ -98,20 +97,20 @@ class OtpController extends ChangeNotifier {
 
     try {
       await authService.resendVerificationCode(email);
-      final ctx = navigatorKey.currentContext;
-      if (ctx != null) {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
         AppDialogs.showSuccess(
-          ctx,
+          context,
           message: 'A new code has been sent to your email.',
         );
       }
       startResendTimer();
     } catch (e) {
       log('Resend OTP Error: $e');
-      final ctx = navigatorKey.currentContext;
-      if (ctx != null) {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
         AppDialogs.showError(
-          ctx,
+          context,
           message: 'Could not resend the code, please try again.',
         );
       }
@@ -121,10 +120,12 @@ class OtpController extends ChangeNotifier {
     }
   }
 
+  // ------------------------------dispose--------------------------------
+
   @override
   void dispose() {
     _resendTimer?.cancel();
-    otpController.dispose();
+    otpCodeController.dispose();
     super.dispose();
   }
 }

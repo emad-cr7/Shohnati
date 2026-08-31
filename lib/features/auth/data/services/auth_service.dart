@@ -100,7 +100,11 @@ class AuthService {
     );
 
     if (result.hasException) {
-
+      log('❌ verifyRegistrationEmail  Error');
+      log('Exception: ${result.exception}');
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+      log('Link Exception: ${result.exception?.linkException}');
+      throw Exception(result.exception.toString());
     }
     return result.data?['verifyRegistrationEmail'];
   }
@@ -118,7 +122,7 @@ class AuthService {
     );
 
     if (result.hasException) {
-      log('❌ resendVerificationCode Email Error');
+      log('❌ resendVerificationCode  Error');
       log('Exception: ${result.exception}');
       log('GraphQL Errors: ${result.exception?.graphqlErrors}');
       log('Link Exception: ${result.exception?.linkException}');
