@@ -14,18 +14,20 @@ class LoginController extends ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> Key = GlobalKey<FormState>();
-
   bool obscurePassword = true;
   bool isLoading = false;
+
+  void togglePassword() {
+    obscurePassword = !obscurePassword;
+    notifyListeners();
+  }
 
   Future<void> login() async {
     if (!Key.currentState!.validate()) {
       return;
     }
-
     isLoading = true;
     notifyListeners();
-
     try {
       final result = await authService.login(
         username: usernameController.text.trim(),
@@ -67,10 +69,7 @@ class LoginController extends ChangeNotifier {
       notifyListeners();
     }
   }
-  void togglePassword() {
-    obscurePassword = !obscurePassword;
-    notifyListeners();
-  }
+
 
   @override
   void dispose() {

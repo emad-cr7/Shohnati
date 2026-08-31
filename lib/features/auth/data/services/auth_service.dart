@@ -7,10 +7,7 @@ import '../queries/auth_queries.dart';
 
 class AuthService {
   final GraphQLClient client = GraphConfig.client();
-
-
   //--------------------------login---------------------------------
-
 
   Future<Map<String, dynamic>?> login({
     required String username,
@@ -30,7 +27,6 @@ class AuthService {
 
     if (result.hasException) {
       final errors = result.exception?.graphqlErrors;
-
       final message = errors != null && errors.isNotEmpty
           ? errors.first.message
           : 'حدث خطأ أثناء تسجيل الدخول';
@@ -107,18 +103,6 @@ class AuthService {
 
     if (result.hasException) {
 
-      //إحنا دخلنا حالة إن فيه Error أثناء Verify Email
-      log('❌ Verify Email Error');
-
-      //ريني الخطأ الأساسي بكل التفاصيل اللي عندك.
-      log('Exception: ${result.exception}');
-
-      //الطلب وصل للسيرفر، لكن GraphQL رجع مشكلة في تنفيذ العملية
-      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
-
-      //أوقف تنفيذ الفانكشن الحالية وارمي الخطأ للفانكشن اللي استدعتني.
-      log('Link Exception: ${result.exception?.linkException}');
-      throw Exception(result.exception.toString());
     }
     return result.data?['verifyRegistrationEmail'];
   }
@@ -126,7 +110,6 @@ class AuthService {
 
 
   //--------------------------resendVerificationCode---------------------
-
 
   Future<bool> resendVerificationCode(String email) async {
     final result = await client.mutate(
@@ -137,7 +120,6 @@ class AuthService {
     );
 
     if (result.hasException) {
-
       log('❌ resendVerificationCode Email Error');
       log('Exception: ${result.exception}');
       log('GraphQL Errors: ${result.exception?.graphqlErrors}');
@@ -146,4 +128,5 @@ class AuthService {
     }
     return result.data?['resendVerificationCode'] ?? false;
   }
+
 }
