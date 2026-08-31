@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:graphql_flutter/graphql_flutter.dart';
-
 import '../../../../core/data_source/graphql/graph_config.dart';
-import '../queries/auth_queries.dart';
+import '../../../../core/data_source/queries/auth_queries.dart';
 
 class AuthService {
   final GraphQLClient client = GraphConfig.client();
