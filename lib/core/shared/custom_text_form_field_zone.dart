@@ -49,6 +49,17 @@ class CustomTextFormFieldZone extends StatelessWidget {
       ),
       popupProps: PopupProps.modalBottomSheet(
         showSearchBox: true,
+        emptyBuilder: (context, searchEntry) {
+          return const Center(
+            child: Text(
+              'No data found',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+          );
+        },
         itemBuilder: (context, item, isDisabled, isSelected) {
           final selected = value?.id == item.id;
           return Container(
@@ -93,7 +104,6 @@ class CustomTextFormFieldZone extends StatelessWidget {
             prefixIcon: const Icon(Icons.search),
             filled: true,
             fillColor: const Color(0xFFF7F7F7),
-
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -102,7 +112,6 @@ class CustomTextFormFieldZone extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Color(0xff29209a)),
