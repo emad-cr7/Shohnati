@@ -33,20 +33,17 @@ class RegisterController extends ChangeNotifier {
   bool isRegistering = false;
 
   // ------------------------------init--------------------------------
-
   init() {
     fetchZones();
   }
 
   // ------------------------------togglePassword--------------------------------
-
   void togglePassword() {
     obscurePassword = !obscurePassword;
     notifyListeners();
   }
 
   // ------------------------------fetchZones--------------------------------
-
   Future<void> fetchZones() async {
     isZonesLoading = true;
     notifyListeners();
@@ -71,7 +68,6 @@ class RegisterController extends ChangeNotifier {
   }
 
   // ------------------------------fetchRegions--------------------------------
-
   Future<void> fetchRegions() async {
     isRegionsLoading = true;
     notifyListeners();
@@ -105,9 +101,20 @@ class RegisterController extends ChangeNotifier {
   // ------------------------------register--------------------------------
 
   Future<void> register() async {
-    if (!key.currentState!.validate()) {
+    if (!key.currentState!.validate()) return;
+
+    if (selectedZones == null || selectedRegion == null) {
+      final context = navigatorKey.currentContext;
+
+      if (context != null) {
+        AppDialogs.showError(
+          context,
+          message: 'Please select zone and region.',
+        );
+      }
       return;
     }
+
     isRegistering = true;
     notifyListeners();
 
@@ -125,69 +132,41 @@ class RegisterController extends ChangeNotifier {
         postalCode: '11511',
       );
       log('Register response: $success');
-      final context = navigatorKey.currentContext;
-
-      if (selectedZones == null || selectedRegion == null) {
-
+      if (!success) {
         final context = navigatorKey.currentContext;
-
-
-        if (context != null) {
-          AppDialogs.showError(
-            context,
-            message: 'Please select zone and region.',
-          );
-        }
-        return;
-      }
-
-      if (success) {
-        if (context != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => OtpScreen(email: emailController.text.trim()),
-            ),
-          );
-        }
-      } else {
         if (context != null) {
           AppDialogs.showError(
             context,
             message: 'Registration failed, please try again.',
           );
         }
+        return;
       }
-
-
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => OtpScreen(email: emailController.text.trim()),
+          ),
+        );
+      }
     } catch (e) {
       final context = navigatorKey.currentContext;
-      if (context == null) return;
-      final errorStr = e.toString();
-      final isEmailTaken = errorStr.contains('input.email');
-      final isMobileTaken = errorStr.contains('input.mobile');
 
-      if (isEmailTaken && isMobileTaken) {
-        AppDialogs.showError(
-          context,
-          message: 'The email and phone number are already in use.',
-        );
-      } else if (isEmailTaken) {
-        AppDialogs.showError(
-          context,
-          message: 'This email address is already in use.',
-        );
-      } else if (isMobileTaken) {
-        AppDialogs.showError(
-          context,
-          message: 'This phone number is already in use.',
-        );
+      if (context == null) return;
+      final error = e.toString();
+      String message;
+      if (error.contains('input.email') && error.contains('input.mobile')) {
+        message = 'The email and phone number are already in use.';
+      } else if (error.contains('input.email')) {
+        message = 'This email address is already in use.';
+      } else if (error.contains('input.mobile')) {
+        message = 'This phone number is already in use.';
       } else {
-        AppDialogs.showError(
-          context,
-          message: 'Something went wrong, please try again.',
-        );
+        message = 'Something went wrong, please try again.';
       }
+      AppDialogs.showError(context, message: message);
     } finally {
       isRegistering = false;
       notifyListeners();
