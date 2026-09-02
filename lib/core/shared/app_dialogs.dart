@@ -14,6 +14,7 @@ class AppDialogs {
       title: title,
       desc: message,
       btnOkText: 'OK',
+      btnOkColor: Colors.red,
       btnOkOnPress: () {},
     ).show();
   }
