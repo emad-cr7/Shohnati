@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sh7naty/features/auth/login/login_screen.dart';
 import '../../../../core/shared/app_dialogs.dart';
 import '../../../../main.dart';
-import '../../../home/home_screen.dart';
 import '../../data/services/auth_service.dart';
 
 class OtpController extends ChangeNotifier {
@@ -45,7 +44,6 @@ class OtpController extends ChangeNotifier {
   Future<void> verify() async {
     final code = otpCodeController.text.trim();
     final context = navigatorKey.currentContext;
-
     if (code.length != 4) {
       if (context != null) {
         AppDialogs.showError(
@@ -60,27 +58,19 @@ class OtpController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final result = await authService.verifyRegistrationEmail(
-        email: email,
-        code: code,
-      );
+      await authService.verifyRegistrationEmail(email: email, code: code);
 
-      if (result['token'] != null) {
-        if (context != null) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => LoginScreen()),
-            (route) => false,
-          );
-        }
+      if (context != null) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => LoginScreen()),
+          (route) => false,
+        );
       }
     } catch (e) {
       log('Verify OTP Error: $e');
       if (context != null) {
-        AppDialogs.showError(
-          context,
-          message: 'Invalid or expired code, please try again.',
-        );
+        AppDialogs.showError(context, message: e.toString());
       }
     } finally {
       isVerifying = false;
