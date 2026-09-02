@@ -86,4 +86,16 @@ mutation ResendVerificationCode($email: String!) {
   resendVerificationCode(email: $email)
 }
 ''';
+
+  //-------------------------- نسيت كلمة المرور.----------------------
+
+
+
+  static const String resetPasswordMutation = r'''
+  mutation ResetPassword($email: String!) {
+    resetPassword(email: $email)
+  }
+''';
 }
+
+

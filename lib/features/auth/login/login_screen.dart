@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sh7naty/features/auth/login/login_controller.dart';
+import 'package:sh7naty/features/auth/login/widgets/forgot_password_sheet.dart';
 import 'package:sh7naty/features/auth/register/register_screen.dart';
 import '../../../core/shared/custom_text_formField.dart';
 import '../../../core/shared/validators/validators.dart';
@@ -93,7 +94,20 @@ class LoginScreen extends StatelessWidget {
                                         tapTargetSize:
                                             MaterialTapTargetSize.shrinkWrap,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(20),
+                                            ),
+                                          ),
+                                          builder: (context) {
+                                            return ForgotPasswordSheet();
+                                          },
+                                        );
+                                      },
                                       child: Text('Forgot your password?'),
                                     ),
                                   ),

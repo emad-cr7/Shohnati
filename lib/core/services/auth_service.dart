@@ -5,6 +5,7 @@ import '../../../../core/data_source/graphql/queries/auth_queries.dart';
 
 class AuthService {
   final GraphQLClient client = GraphConfig.client();
+
   //--------------------------login---------------------------------
 
   Future<Map<String, dynamic>?> login({
@@ -41,7 +42,6 @@ class AuthService {
 
   //--------------------------register---------------------------------
 
-
   Future<bool> register({
     required String businessName,
     required String name,
@@ -73,7 +73,6 @@ class AuthService {
       ),
     );
     if (result.hasException) {
-
       log('❌ register  Error');
 
       log('Exception: ${result.exception}');
@@ -87,7 +86,6 @@ class AuthService {
   }
 
   //--------------------------verifyRegistrationEmail---------------------
-
 
   Future<Map<String, dynamic>> verifyRegistrationEmail({
     required String email,
@@ -136,5 +134,24 @@ class AuthService {
       throw Exception(result.exception.toString());
     }
     return result.data?['resendVerificationCode'] ?? false;
+  }
+
+  //--------------------------resendVerificationCode---------------------
+
+  Future<bool> resetPassword(String email) async {
+    final result = await client.mutate(
+      MutationOptions(
+        document: gql(AuthQueries.resetPasswordMutation),
+        variables: {'email': email},
+      ),
+    );
+    if (result.hasException) {
+      log('❌ resetPassword Error');
+      log('Exception: ${result.exception}');
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+      log('Link Exception: ${result.exception?.linkException}');
+      throw Exception(result.exception.toString());
+    }
+    return result.data?['resetPassword'] ?? false;
   }
 }

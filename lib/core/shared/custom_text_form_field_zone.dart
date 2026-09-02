@@ -1,7 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/auth/data/models/zone_model.dart';
+import '../../features/auth/register/data/models/zone_model.dart';
+
 
 class CustomTextFormFieldZone extends StatelessWidget {
   final ZoneModel? value;

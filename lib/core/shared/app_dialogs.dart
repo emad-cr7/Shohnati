@@ -18,6 +18,23 @@ class AppDialogs {
       btnOkOnPress: () {},
     ).show();
   }
+  static void showInfo(
+      BuildContext context, {
+        String title = 'Info',
+        required String message,
+        VoidCallback? onOkPressed,
+      }) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.info,
+      animType: AnimType.scale,
+      title: title,
+      desc: message,
+      btnOkText: 'OK',
+      btnOkColor: Colors.blueAccent,
+      btnOkOnPress: onOkPressed,
+    ).show();
+  }
 
   static void showSuccess(
     BuildContext context, {
