@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../../core/data_source/graphql/graph_config.dart';
-import '../../../../core/data_source/queries/region_queries.dart';
-import '../../../../core/data_source/queries/zone_queries.dart';
+import '../../../../core/data_source/graphql/queries/region_queries.dart';
+import '../../../../core/data_source/graphql/queries/zone_queries.dart';
 import '../models/zone_model.dart';
 
 
