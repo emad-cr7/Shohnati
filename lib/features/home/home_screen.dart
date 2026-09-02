@@ -6,7 +6,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Text('OKKKKKKKKK', style: TextStyle(fontSize: 50))),
+      body: SafeArea(
+        child: Center(
+          child: Text(
+            'Logged in successfully',
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
+      ),
     );
   }
 }
