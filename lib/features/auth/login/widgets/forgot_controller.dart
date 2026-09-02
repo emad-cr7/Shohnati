@@ -43,11 +43,15 @@ class ForgotController extends ChangeNotifier {
       }
     } catch (e) {
       log('Reset Password Error: $e');
+
       final context = navigatorKey.currentContext;
       if (context != null) {
-        AppDialogs.showError(context, message: e.toString());
+        AppDialogs.showError(
+          context,
+          message: 'Unable to reset your password. Please try again later.',
+        );
       }
-    } finally {
+    }finally {
       isLoading = false;
       notifyListeners();
     }
