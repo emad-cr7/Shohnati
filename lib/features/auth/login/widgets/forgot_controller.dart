@@ -19,7 +19,7 @@ class ForgotController extends ChangeNotifier {
     notifyListeners();
     try {
       final result = await authService.resetPassword(
-         emailController.text.trim(),
+        emailController.text.trim(),
       );
 
       log('Reset Password response: $result');
@@ -51,7 +51,7 @@ class ForgotController extends ChangeNotifier {
           message: 'Unable to reset your password. Please try again later.',
         );
       }
-    }finally {
+    } finally {
       isLoading = false;
       notifyListeners();
     }
