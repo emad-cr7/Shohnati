@@ -5,7 +5,7 @@ import '../../../../core/shared/custom_text_formField.dart';
 import '../../../../core/shared/validators/validators.dart';
 
 class ForgotPasswordSheet extends StatelessWidget {
- const ForgotPasswordSheet({super.key});
+  const ForgotPasswordSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +59,12 @@ class ForgotPasswordSheet extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: controller.handleSubmit,
-                        child: const Text('Send'),
+                        onPressed: controller.resetPassword,
+                        child: controller.isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text('Send'),
                       ),
                     ),
                     const SizedBox(height: 16),

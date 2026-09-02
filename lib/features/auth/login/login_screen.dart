@@ -7,7 +7,7 @@ import '../../../core/shared/custom_text_formField.dart';
 import '../../../core/shared/validators/validators.dart';
 
 class LoginScreen extends StatelessWidget {
- const LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,18 +95,7 @@ class LoginScreen extends StatelessWidget {
                                             MaterialTapTargetSize.shrinkWrap,
                                       ),
                                       onPressed: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20),
-                                            ),
-                                          ),
-                                          builder: (context) {
-                                            return ForgotPasswordSheet();
-                                          },
-                                        );
+                                        controller.forgotPasswordSheet();
                                       },
                                       child: Text('Forgot your password?'),
                                     ),
@@ -165,7 +154,9 @@ class LoginScreen extends StatelessWidget {
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall!
-                                              .copyWith(color: Color(0xff00288E)),
+                                              .copyWith(
+                                                color: Color(0xff00288E),
+                                              ),
                                         ),
                                       ),
                                     ],

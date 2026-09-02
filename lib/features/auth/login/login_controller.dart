@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:sh7naty/features/auth/login/widgets/forgot_password_sheet.dart';
 import '../../../core/data_source/shared_preferences/preferences_manager.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../core/shared/app_dialogs.dart';
@@ -37,10 +38,7 @@ class LoginController extends ChangeNotifier {
       final context = navigatorKey.currentContext;
 
       if (result != null && result['token'] != null) {
-        await preferencesManager.setString(
-          'token',
-          result['token'],
-        );
+        await preferencesManager.setString('token', result['token']);
         if (context != null) {
           Navigator.pushAndRemoveUntil(
             context,
@@ -66,6 +64,22 @@ class LoginController extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> forgotPasswordSheet() async {
+    final context = navigatorKey.currentContext;
+    if (context == null) return;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+      ),
+      builder: (context) {
+        return ForgotPasswordSheet();
+      },
+    );
   }
 
   @override
