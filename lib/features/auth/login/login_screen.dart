@@ -27,140 +27,142 @@ class LoginScreen extends StatelessWidget {
                   return Center(
                     child: Form(
                       key: controller.Key,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Sh7naty",
-                            style: Theme.of(context).textTheme.displaySmall,
-                          ),
-                          Text(
-                            "Easier shipping... faster delivery.",
-                            style: Theme.of(context).textTheme.displayMedium,
-                          ),
-                          SizedBox(height: 25),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Welcome back.",
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.displayLarge,
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "Log in to easily track your shipments.",
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.displayMedium,
-                                ),
-                                SizedBox(height: 30),
-                                CustomTextFormField(
-                                  title: 'username / Email',
-                                  controller: controller.usernameController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  textInputAction: TextInputAction.next,
-                                  prefixIcon: Icons.email,
-                                  validator: Validators.email,
-                                ),
-                                SizedBox(height: 20),
-                                CustomTextFormField(
-                                  title: 'Password',
-                                  controller: controller.passwordController,
-                                  textInputAction: TextInputAction.done,
-                                  prefixIcon: Icons.lock_outline,
-                                  obscureText: controller.obscurePassword,
-                                  validator: Validators.password,
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      controller.obscurePassword
-                                          ? Icons.visibility_off_outlined
-                                          : Icons.visibility_outlined,
-                                      size: 20,
-                                    ),
-                                    onPressed: controller.togglePassword,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Sh7naty",
+                              style: Theme.of(context).textTheme.displaySmall,
+                            ),
+                            Text(
+                              "Easier shipping... faster delivery.",
+                              style: Theme.of(context).textTheme.displayMedium,
+                            ),
+                            SizedBox(height: 25),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Welcome back.",
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.displayLarge,
                                   ),
-                                ),
-                                SizedBox(height: 7),
-                                Align(
-                                  alignment: .topEnd,
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      minimumSize: Size.zero,
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Text('Forgot your password?'),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "Log in to easily track your shipments.",
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.displayMedium,
                                   ),
-                                ),
-                                SizedBox(height: 20),
-                                SizedBox(
-                                  height: 55,
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      controller.login();
-                                    },
-                                    child: controller.isLoading
-                                        ? CircularProgressIndicator(
-                                            color: Colors.white,
-                                          )
-                                        : Text(
-                                            "Login",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                  SizedBox(height: 30),
+                                  CustomTextFormField(
+                                    title: 'username / Email',
+                                    controller: controller.usernameController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
+                                    prefixIcon: Icons.email,
+                                    validator: Validators.email,
                                   ),
-                                ),
-                                SizedBox(height: 30),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Don't have an account?",
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleSmall,
+                                  SizedBox(height: 20),
+                                  CustomTextFormField(
+                                    title: 'Password',
+                                    controller: controller.passwordController,
+                                    textInputAction: TextInputAction.done,
+                                    prefixIcon: Icons.lock_outline,
+                                    obscureText: controller.obscurePassword,
+                                    validator: Validators.password,
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        controller.obscurePassword
+                                            ? Icons.visibility_off_outlined
+                                            : Icons.visibility_outlined,
+                                        size: 20,
+                                      ),
+                                      onPressed: controller.togglePassword,
                                     ),
-                                    SizedBox(width: 5),
-                                    TextButton(
+                                  ),
+                                  SizedBox(height: 7),
+                                  Align(
+                                    alignment: .topEnd,
+                                    child: TextButton(
                                       style: TextButton.styleFrom(
                                         padding: EdgeInsets.zero,
                                         minimumSize: Size.zero,
                                         tapTargetSize:
                                             MaterialTapTargetSize.shrinkWrap,
                                       ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                              return RegisterScreen();
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        "Create an account",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(color: Color(0xff00288E)),
-                                      ),
+                                      onPressed: () {},
+                                      child: Text('Forgot your password?'),
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  SizedBox(
+                                    height: 55,
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        controller.login();
+                                      },
+                                      child: controller.isLoading
+                                          ? CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                          : Text(
+                                              "Login",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 30),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Don't have an account?",
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleSmall,
+                                      ),
+                                      SizedBox(width: 5),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          minimumSize: Size.zero,
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                                return RegisterScreen();
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          "Create an account",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(color: Color(0xff00288E)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
