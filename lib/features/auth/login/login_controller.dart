@@ -1,12 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import '../../../core/data_source/shared_preferences/preferences_manager.dart';
+import '../../../core/services/auth_service.dart';
 import '../../../core/shared/app_dialogs.dart';
 import '../../../main.dart';
 import '../../home/home_screen.dart';
-import '../data/services/auth_service.dart';
 
 class LoginController extends ChangeNotifier {
   final AuthService authService = AuthService();

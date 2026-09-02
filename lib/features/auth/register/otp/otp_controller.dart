@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:sh7naty/features/auth/login/login_screen.dart';
+import '../../../../core/services/auth_service.dart';
 import '../../../../core/shared/app_dialogs.dart';
 import '../../../../main.dart';
-import '../../data/services/auth_service.dart';
+
 
 class OtpController extends ChangeNotifier {
   final String email;

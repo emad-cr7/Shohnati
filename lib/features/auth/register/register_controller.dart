@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import '../../../core/services/auth_service.dart';
+import '../../../core/services/register_service.dart';
 import '../../../core/shared/app_dialogs.dart';
 import '../../../main.dart';
 import '../data/models/zone_model.dart';
-import '../data/services/auth_service.dart';
-import '../data/services/register_service.dart';
 import 'helpers/register_helper.dart';
 import 'otp/otp_screen.dart';
 

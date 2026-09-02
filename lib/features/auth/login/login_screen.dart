@@ -4,11 +4,9 @@ import 'package:sh7naty/features/auth/login/login_controller.dart';
 import 'package:sh7naty/features/auth/register/register_screen.dart';
 import '../../../core/shared/custom_text_formField.dart';
 import '../../../core/shared/validators/validators.dart';
-import '../../../main.dart';
-import '../register/otp/otp_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+ const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
