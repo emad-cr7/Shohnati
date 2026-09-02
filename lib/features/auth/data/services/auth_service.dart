@@ -28,9 +28,11 @@ class AuthService {
       final message = errors != null && errors.isNotEmpty
           ? errors.first.message
           : 'حدث خطأ أثناء تسجيل الدخول';
+      log('Exception: ${result.exception}');
+      log('GraphQL Errors: ${result.exception?.graphqlErrors}');
+      log('Link Exception: ${result.exception?.linkException}');
 
       log('Login Error: $message');
-
       throw Exception(message);
     }
 
@@ -106,10 +108,15 @@ class AuthService {
       log('Link Exception: ${result.exception?.linkException}');
       throw Exception(result.exception.toString());
     }
-    return result.data?['verifyRegistrationEmail'];
+
+    log('✅ Verify response: ${result.data}');
+
+    final data = result.data?['verifyRegistrationEmail'];
+    if (data == null) {
+      throw Exception('Empty response from server for verifyRegistrationEmail');
+    }
+    return data as Map<String, dynamic>;
   }
-
-
 
   //--------------------------resendVerificationCode---------------------
 
@@ -130,5 +137,4 @@ class AuthService {
     }
     return result.data?['resendVerificationCode'] ?? false;
   }
-
 }
