@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class AppDialogs {
   static void showError(
-      BuildContext context, {
-        String title = 'Error',
-        required String message,
-      }) {
+    BuildContext context, {
+    String title = 'Error',
+    required String message,
+  }) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
@@ -16,11 +16,13 @@ class AppDialogs {
       btnOkText: 'OK',
       btnOkOnPress: () {},
     ).show();
-  } static void showSuccess(
-      BuildContext context, {
-        String title = 'Success',
-        required String message,
-      }) {
+  }
+
+  static void showSuccess(
+    BuildContext context, {
+    String title = 'Success',
+    required String message,
+  }) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
@@ -33,16 +35,15 @@ class AppDialogs {
   }
 
   static void showAlreadyRegistered(
-      BuildContext context, {
-        VoidCallback? onLoginPressed,
-      }) {
+    BuildContext context, {
+    VoidCallback? onLoginPressed,
+  }) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.warning,
       animType: AnimType.scale,
       title: 'The account already exists.',
-      desc:
-      'Email or mobile number already registered. Please log in instead.',
+      desc: 'Email or mobile number already registered. Please log in instead.',
       btnOkText: 'OK',
       btnOkOnPress: () {},
       btnCancelText: onLoginPressed != null ? 'Log in' : null,
