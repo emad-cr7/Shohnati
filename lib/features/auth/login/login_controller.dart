@@ -62,7 +62,7 @@ class LoginController extends ChangeNotifier {
       log('Login Error: $e');
       final context = navigatorKey.currentContext;
       if (context != null) {
-        AppDialogs.showError(context, message: 'Invalid email or password.');
+        AppDialogs.showError(context, message: e.toString());
       }
     } finally {
       isLoading = false;
