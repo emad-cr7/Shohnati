@@ -32,7 +32,6 @@ class AuthService {
       log('Exception: ${result.exception}');
       log('GraphQL Errors: ${result.exception?.graphqlErrors}');
       log('Link Exception: ${result.exception?.linkException}');
-
       log('Login Error: $message');
       throw Exception(message);
     }
